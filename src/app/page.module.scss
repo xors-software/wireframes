@@ -1,0 +1,142 @@
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$accent: #0a0a0a;
+
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.header {
+  margin-bottom: 80px;
+}
+
+.logo {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.tagline {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+.section {
+  margin-bottom: 64px;
+}
+
+.sectionHeader {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $border;
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $text-muted;
+  margin-bottom: 4px;
+}
+
+.sectionDescription {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid $border;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #fafafa;
+    margin: 0 -12px;
+    padding: 16px 12px;
+  }
+}
+
+.itemNumber {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  min-width: 56px;
+  padding-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemContent {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  transition: color 0.15s ease;
+}
+
+.item:hover .itemName {
+  color: $text-secondary;
+}
+
+.itemDescription {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+.itemArrow {
+  font-size: 0.875rem;
+  color: $text-muted;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.15s ease;
+  padding-top: 2px;
+}
+
+.item:hover .itemArrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.footer {
+  padding-top: 48px;
+  border-top: 1px solid $border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerText {
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLink {
+  font-size: 0.75rem;
+  color: $text-muted;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
