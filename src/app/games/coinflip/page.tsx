@@ -3,31 +3,16 @@
 import { useState, useCallback, useEffect } from "react";
 import styles from "./page.module.scss";
 import { useTokens } from "@/hooks/useTokens";
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-
-const API_BASE = 'https://api.xors.xyz';
-
-// =============================================================================
-// TYPES
-// =============================================================================
-
-interface HistoryItem {
-  resultHeads: boolean;
-  won: boolean;
-  betAmount: number;
-}
+import { ApiKeyInput } from "@/components/ApiKeyInput";
+import { API_BASE, STARTING_BALANCE, DEFAULT_BET } from "@/lib/constants";
+import type { CoinflipHistoryItem } from "@/lib/types";
 
 // =============================================================================
 // MAIN COMPONENT
 // =============================================================================
 
-const DEFAULT_BET = 500;
-
 export default function CoinflipGame() {
-  const tokens = useTokens(1000);
+  const tokens = useTokens(STARTING_BALANCE);
   
   const [gamesPlayed, setGamesPlayed] = useState(0);
   const [gamesWon, setGamesWon] = useState(0);
@@ -41,7 +26,7 @@ export default function CoinflipGame() {
     won: boolean;
   } | null>(null);
   const [coinSide, setCoinSide] = useState<"heads" | "tails">("heads");
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState<CoinflipHistoryItem[]>([]);
 
   // Adjust bet amount if it exceeds balance
   useEffect(() => {
@@ -152,7 +137,7 @@ export default function CoinflipGame() {
     if (tokens.isConnected) {
       tokens.refetch();
     } else {
-      tokens.addLocal(1000 - tokens.balance);
+      tokens.addLocal(STARTING_BALANCE - tokens.balance);
     }
     setGamesPlayed(0);
     setGamesWon(0);
@@ -172,7 +157,14 @@ export default function CoinflipGame() {
             <h1>Coinflip</h1>
             <div className={styles.subtitle}>WIREFRAMES</div>
           </div>
-          <div className={styles.status}>● READY</div>
+          <ApiKeyInput
+            apiKey={tokens.apiKey}
+            isConnected={tokens.isConnected}
+            isLoading={tokens.isLoading}
+            error={tokens.error}
+            onSetApiKey={tokens.setApiKey}
+            onClearApiKey={tokens.clearApiKey}
+          />
         </header>
 
         {/* Balance Display */}
@@ -181,7 +173,9 @@ export default function CoinflipGame() {
           <div className={styles.balanceValue}>
             {tokens.balance.toString().padStart(6, '0')}
           </div>
-          <div className={styles.balanceUnit}>TOKENS</div>
+          <div className={styles.balanceUnit}>
+            {tokens.isConnected ? 'CREDITS' : 'TOKENS'}
+          </div>
         </div>
 
         {/* Stats Grid */}
@@ -310,7 +304,7 @@ export default function CoinflipGame() {
         {/* Reset Button */}
         {tokens.balance === 0 && (
           <button onClick={handleReset} className={styles.resetButton}>
-            START OVER (1,000)
+            START OVER ({STARTING_BALANCE.toLocaleString()})
           </button>
         )}
 

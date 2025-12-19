@@ -1,0 +1,466 @@
+@use "sass:math";
+@use "sass:color";
+
+// =============================================================================
+// VARIABLES
+// =============================================================================
+
+$cream: #FAF7F2;
+$cream-dark: #F0EBE3;
+$ink: #1a1a1a;
+$ink-light: #2a2a2a;
+$muted: #8a8580;
+$muted-light: #b5b0a8;
+$muted-lighter: #d0cbc3;
+$error: #c25550;
+$accent: #ff6b00;
+
+$font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+
+// =============================================================================
+// CONTAINER
+// =============================================================================
+
+.container {
+  min-height: 100vh;
+  background: $cream;
+  color: $ink;
+  font-family: $font-mono;
+  position: relative;
+}
+
+.gridOverlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: 
+    repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 24px),
+    repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 24px);
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+  position: relative;
+}
+
+// =============================================================================
+// HEADER
+// =============================================================================
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  border-bottom: 2px solid $ink;
+  margin-bottom: 24px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  h1 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    margin: 0;
+  }
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  background: $ink;
+  color: $accent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 10px;
+  color: $muted;
+  letter-spacing: 0.1em;
+  margin: 4px 0 0 0;
+}
+
+.headerRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.balanceBox {
+  background: $accent;
+  color: $ink;
+  padding: 8px 16px;
+  height: 52px;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.balanceLabel {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+.balanceValue {
+  font-size: 18px;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+// =============================================================================
+// GAME AREA
+// =============================================================================
+
+.gameArea {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.handLabels {
+  display: flex;
+  justify-content: center;
+}
+
+.handHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 16px;
+  background: $cream;
+  border: 2px solid $ink;
+}
+
+.dealerHeader {
+  background: $cream-dark;
+}
+
+.playerHeader {
+  background: $cream;
+}
+
+.handLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+
+.handTotal {
+  font-size: 24px;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+
+  &.bust {
+    color: $error;
+  }
+}
+
+.cardsTable {
+  flex: 1;
+  min-height: 400px;
+  border: 2px solid $ink;
+  background: $cream;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.emptyTableOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $muted-light;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+// =============================================================================
+// RESULT DISPLAY
+// =============================================================================
+
+.resultDisplay {
+  text-align: center;
+  padding: 16px;
+  border: 2px solid $ink;
+  animation: resultPop 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@keyframes resultPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.resultText {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+}
+
+.resultPayout {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.resultBlackjack {
+  background: $accent;
+  color: $ink;
+}
+
+.resultWin {
+  background: $ink;
+  color: $accent;
+}
+
+.resultLose {
+  background: $error;
+  color: $cream;
+}
+
+.resultPush {
+  background: $muted;
+  color: $cream;
+}
+
+// =============================================================================
+// BETTING AREA
+// =============================================================================
+
+.bettingArea {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.betInputContainer {
+  text-align: center;
+  padding: 20px;
+  border: 2px solid $ink;
+  background: $cream-dark;
+}
+
+.betLabel {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.betInputWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.betCurrency {
+  font-size: 32px;
+  font-weight: bold;
+  color: $ink;
+}
+
+.betInput {
+  font-family: inherit;
+  font-size: 32px;
+  font-weight: bold;
+  width: 150px;
+  padding: 8px 12px;
+  border: 2px solid $ink;
+  background: #ffffff;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  transition: all 0.15s ease;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+  }
+
+  &::placeholder {
+    color: $muted-light;
+  }
+
+  // Hide number input spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+.betMax {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+  opacity: 0.5;
+}
+
+.btnRepeat {
+  align-self: center;
+  background: transparent;
+  color: $ink;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  padding: 10px 16px;
+  border: 2px solid $ink;
+  cursor: pointer;
+  transition: all 0.1s ease;
+
+  &:hover {
+    background: $cream-dark;
+  }
+}
+
+// =============================================================================
+// CONTROLS
+// =============================================================================
+
+.controls {
+  margin-top: 24px;
+}
+
+.currentBetIndicator {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.actionButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+// Shared button styles
+%btn-base {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  padding: 20px 40px;
+  border: 2px solid $ink;
+  cursor: pointer;
+  transition: all 0.1s ease;
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.btnDeal,
+.btnNew {
+  @extend %btn-base;
+  width: 100%;
+  background: $ink;
+  color: $accent;
+
+  &:disabled {
+    background: $muted;
+    color: $cream;
+  }
+
+  &:hover:not(:disabled) {
+    background: $ink-light;
+  }
+}
+
+.btnHit {
+  @extend %btn-base;
+  background: $accent;
+  color: $ink;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($accent, $lightness: 5%);
+  }
+}
+
+.btnStand {
+  @extend %btn-base;
+  background: $cream;
+  color: $ink;
+
+  &:hover:not(:disabled) {
+    background: $cream-dark;
+  }
+}
+
+.brokeMessage {
+  text-align: center;
+
+  p {
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+}
+
+// =============================================================================
+// FOOTER
+// =============================================================================
+
+.footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid $muted-lighter;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: $muted-light;
+}
+
+.footerStats {
+  font-variant-numeric: tabular-nums;
+}
+
+.footerBrand {
+  opacity: 0.6;
+}
