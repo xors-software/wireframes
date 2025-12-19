@@ -1,0 +1,262 @@
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$destructive: #dc2626;
+$destructive-hover: #b91c1c;
+
+.page {
+  max-width: 800px;
+}
+
+.header {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $border;
+}
+
+.code {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sectionDescription {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  margin-bottom: 16px;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+// =============================================================================
+// BASE BUTTON STYLES
+// =============================================================================
+
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $text;
+    outline-offset: 2px;
+  }
+}
+
+// =============================================================================
+// BUTTON VARIANTS
+// =============================================================================
+
+.btnPrimary {
+  @extend %btn-base;
+  background: $text;
+  color: $bg;
+  border-color: $text;
+
+  &:hover:not(:disabled) {
+    background: $text-secondary;
+    border-color: $text-secondary;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+.btnSecondary {
+  @extend %btn-base;
+  background: $bg;
+  color: $text;
+  border-color: $border;
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+    border-color: $text-muted;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+.btnGhost {
+  @extend %btn-base;
+  background: transparent;
+  color: $text;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+.btnDestructive {
+  @extend %btn-base;
+  background: $destructive;
+  color: $bg;
+  border-color: $destructive;
+
+  &:hover:not(:disabled) {
+    background: $destructive-hover;
+    border-color: $destructive-hover;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+// =============================================================================
+// BUTTON SIZES
+// =============================================================================
+
+.btnSmall {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+}
+
+.btnLarge {
+  padding: 14px 28px;
+  font-size: 1rem;
+}
+
+.btnFull {
+  width: 100%;
+}
+
+// =============================================================================
+// BUTTON WITH ICONS
+// =============================================================================
+
+.btnIcon {
+  font-size: 1em;
+  line-height: 1;
+}
+
+.btnIconOnly {
+  @extend %btn-base;
+  background: $bg;
+  color: $text;
+  border-color: $border;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+    border-color: $text-muted;
+  }
+}
+
+// =============================================================================
+// BUTTON GROUPS
+// =============================================================================
+
+.buttonGroup {
+  display: inline-flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid $border;
+}
+
+.btnGroupItem {
+  @extend %btn-base;
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid $border;
+  background: $bg;
+  color: $text;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &:hover:not(:disabled) {
+    background: $bg-hover;
+  }
+}
+
+// =============================================================================
+// LOADING STATE
+// =============================================================================
+
+.btnLoading {
+  position: relative;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// =============================================================================
+// FULL WIDTH CONTAINER
+// =============================================================================
+
+.fullWidthContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+}

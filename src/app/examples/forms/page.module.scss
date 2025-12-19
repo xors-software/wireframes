@@ -1,0 +1,446 @@
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$error: #dc2626;
+$success: #16a34a;
+
+.page {
+  max-width: 800px;
+}
+
+.header {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $border;
+}
+
+.code {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sectionDescription {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  margin-bottom: 16px;
+}
+
+// =============================================================================
+// FORM GRID
+// =============================================================================
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+// =============================================================================
+// LABELS
+// =============================================================================
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $text;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.labelOptional {
+  font-weight: 400;
+  color: $text-muted;
+}
+
+.helpText {
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: $error;
+}
+
+// =============================================================================
+// TEXT INPUT
+// =============================================================================
+
+.input {
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg;
+  color: $text;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $text;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  }
+
+  &:disabled {
+    background: $bg-hover;
+    color: $text-muted;
+    cursor: not-allowed;
+  }
+
+  &:read-only {
+    background: $bg-hover;
+  }
+}
+
+.inputValid {
+  border-color: $success;
+
+  &:focus {
+    border-color: $success;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  }
+}
+
+.inputError {
+  border-color: $error;
+
+  &:focus {
+    border-color: $error;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
+}
+
+// =============================================================================
+// TEXTAREA
+// =============================================================================
+
+.textarea {
+  @extend .input;
+  resize: vertical;
+  min-height: 80px;
+}
+
+// =============================================================================
+// SELECT
+// =============================================================================
+
+.select {
+  @extend .input;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// =============================================================================
+// CHECKBOX
+// =============================================================================
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+
+  &:checked + .checkboxCustom {
+    background: $text;
+    border-color: $text;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &:focus + .checkboxCustom {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.checkboxCustom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid $border;
+  border-radius: 4px;
+  background: $bg;
+  position: relative;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid $bg;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+}
+
+// =============================================================================
+// RADIO
+// =============================================================================
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+
+  &:checked + .radioCustom {
+    border-color: $text;
+
+    &::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &:focus + .radioCustom {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.radioCustom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid $border;
+  border-radius: 50%;
+  background: $bg;
+  position: relative;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: $text;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.15s ease;
+  }
+}
+
+// =============================================================================
+// TOGGLE SWITCH
+// =============================================================================
+
+.switchGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.switchLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  max-width: 300px;
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  padding: 2px;
+  border: none;
+  border-radius: 12px;
+  background: $border;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $text;
+    outline-offset: 2px;
+  }
+}
+
+.switchOn {
+  background: $text;
+}
+
+.switchThumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: $bg;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .switchOn & {
+    transform: translateX(20px);
+  }
+}
+
+// =============================================================================
+// FORM LAYOUT
+// =============================================================================
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px;
+  padding: 24px;
+  border: 1px solid $border;
+  border-radius: 8px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid $border;
+  margin-top: 8px;
+}
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
+
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.btnPrimary {
+  @extend %btn-base;
+  background: $text;
+  color: $bg;
+  border-color: $text;
+
+  &:hover {
+    background: $text-secondary;
+    border-color: $text-secondary;
+  }
+}
+
+.btnSecondary {
+  @extend %btn-base;
+  background: $bg;
+  color: $text;
+  border-color: $border;
+
+  &:hover {
+    background: $bg-hover;
+    border-color: $text-muted;
+  }
+}

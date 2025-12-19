@@ -75,6 +75,12 @@ const games: Item[] = [
     description: 'Classic 21. Beat the dealer without going bust.',
     href: '/games/blackjack',
   },
+  {
+    id: 1,
+    label: 'coinflip',
+    description: 'Heads or tails. Double or nothing.',
+    href: '/games/coinflip',
+  },
 ]
 
 function formatNumber(n: number): string {

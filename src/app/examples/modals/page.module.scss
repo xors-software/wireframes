@@ -1,0 +1,448 @@
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$destructive: #dc2626;
+$destructive-hover: #b91c1c;
+
+.page {
+  max-width: 800px;
+}
+
+.header {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $border;
+}
+
+.code {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+.section {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid $border;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sectionDescription {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  margin-bottom: 16px;
+}
+
+// =============================================================================
+// TRIGGER BUTTON
+// =============================================================================
+
+.btn {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  background: $text;
+  color: $bg;
+  border: 1px solid $text;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $text-secondary;
+    border-color: $text-secondary;
+  }
+}
+
+// =============================================================================
+// OVERLAY
+// =============================================================================
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+  padding: 24px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// =============================================================================
+// MODAL
+// =============================================================================
+
+.modal {
+  background: $bg;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.2s ease;
+}
+
+.modalLarge {
+  @extend .modal;
+  max-width: 560px;
+}
+
+.modalSmall {
+  @extend .modal;
+  max-width: 320px;
+  text-align: center;
+  padding: 32px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border;
+}
+
+.modalTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: $text-muted;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: $bg-hover;
+    color: $text;
+  }
+}
+
+.modalBody {
+  padding: 24px;
+
+  p {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+}
+
+.modalFooter {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid $border;
+}
+
+// =============================================================================
+// ALERT MODAL
+// =============================================================================
+
+.alertIcon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.alertTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.alertText {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+// =============================================================================
+// SIDE SHEET
+// =============================================================================
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 360px;
+  background: $bg;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border;
+}
+
+.sheetBody {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.sheetFooter {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid $border;
+}
+
+// =============================================================================
+// FULL SCREEN MODAL
+// =============================================================================
+
+.fullScreen {
+  position: fixed;
+  inset: 0;
+  background: $bg;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease;
+}
+
+.fullScreenHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid $border;
+}
+
+.fullScreenBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 48px 24px;
+}
+
+.fullScreenContent {
+  max-width: 640px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+}
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
+
+%btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.btnPrimary {
+  @extend %btn-base;
+  background: $text;
+  color: $bg;
+  border-color: $text;
+
+  &:hover {
+    background: $text-secondary;
+    border-color: $text-secondary;
+  }
+}
+
+.btnSecondary {
+  @extend %btn-base;
+  background: $bg;
+  color: $text;
+  border-color: $border;
+
+  &:hover {
+    background: $bg-hover;
+    border-color: $text-muted;
+  }
+}
+
+.btnDestructive {
+  @extend %btn-base;
+  background: $destructive;
+  color: $bg;
+  border-color: $destructive;
+
+  &:hover {
+    background: $destructive-hover;
+    border-color: $destructive-hover;
+  }
+}
+
+// =============================================================================
+// FORM ELEMENTS
+// =============================================================================
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $text;
+}
+
+.input {
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $text;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+.textarea {
+  @extend .input;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.select {
+  @extend .input;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: $text;
+}

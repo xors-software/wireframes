@@ -392,3 +392,4 @@ export function Card3DCanvas({
     </div>
   );
 }
+

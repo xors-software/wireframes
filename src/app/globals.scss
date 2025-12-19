@@ -1,3 +1,4 @@
+@use "sass:math";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 $bg: #ffffff;
@@ -35,4 +36,56 @@ a {
 ::selection {
   background: $text;
   color: $bg;
+}
+
+// =============================================================================
+// COIN FLIP ANIMATION
+// =============================================================================
+
+.perspective-500 {
+  perspective: 600px;
+}
+
+.coin-container {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+}
+
+.coin-flip {
+  animation: coinFlip 1s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+// Generate keyframes with a loop
+@keyframes coinFlip {
+  @for $i from 0 through 10 {
+    $percent: $i * 10%;
+    $rotation: $i * 180deg;
+    
+    // Parabolic arc for translateY
+    $progress: math.div($i, 10);
+    $arc: -50px * 4 * $progress * (1 - $progress);
+    
+    #{$percent} {
+      transform: rotateY($rotation) translateY($arc);
+    }
+  }
+}
+
+// =============================================================================
+// FORM UTILITIES
+// =============================================================================
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

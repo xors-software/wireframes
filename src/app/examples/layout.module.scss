@@ -1,0 +1,58 @@
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $bg;
+  border-bottom: 1px solid $border;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.backLink {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $text;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.navLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.navLink {
+  font-size: 0.75rem;
+  color: $text-muted;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $text;
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 48px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}

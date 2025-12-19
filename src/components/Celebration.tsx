@@ -184,3 +184,4 @@ export function Celebration({ type, amount }: CelebrationProps) {
     </div>
   );
 }
+

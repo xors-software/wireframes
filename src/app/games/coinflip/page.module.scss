@@ -1,0 +1,487 @@
+@use "sass:math";
+
+// =============================================================================
+// VARIABLES
+// =============================================================================
+
+$cream: #FAF7F2;
+$cream-dark: #F0EBE3;
+$ink: #1a1a1a;
+$ink-light: #2a2a2a;
+$muted: #8a8580;
+$muted-light: #b5b0a8;
+$muted-lighter: #d0cbc3;
+$error: #c25550;
+$accent: #ff6b00;
+
+$font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+
+// =============================================================================
+// CONTAINER
+// =============================================================================
+
+.container {
+  min-height: 100vh;
+  background: $cream;
+  color: $ink;
+  font-family: $font-mono;
+  position: relative;
+
+  &::selection {
+    background: $ink;
+    color: $cream;
+  }
+}
+
+.gridOverlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: 
+    repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 20px);
+}
+
+.content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+// =============================================================================
+// HEADER
+// =============================================================================
+
+.header {
+  border-bottom: 2px solid $ink;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.headerLeft {
+  h1 {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+
+.subtitle {
+  font-size: 10px;
+  color: $muted;
+  margin-top: 4px;
+}
+
+.status {
+  font-size: 10px;
+  color: $ink;
+}
+
+// =============================================================================
+// BALANCE DISPLAY
+// =============================================================================
+
+.balanceBox {
+  border: 2px solid $ink;
+  padding: 24px;
+  margin-bottom: 16px;
+  background: $cream;
+}
+
+.balanceLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: $muted;
+  margin-bottom: 8px;
+}
+
+.balanceValue {
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.balanceUnit {
+  font-size: 10px;
+  color: $muted;
+  margin-top: 8px;
+}
+
+// =============================================================================
+// STATS GRID
+// =============================================================================
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: $ink;
+  margin-bottom: 16px;
+}
+
+.statBox {
+  background: $cream;
+  padding: 12px;
+}
+
+.statLabel {
+  font-size: 10px;
+  color: $muted;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+
+  &.negative {
+    color: $error;
+  }
+}
+
+// =============================================================================
+// COIN DISPLAY
+// =============================================================================
+
+.coinBox {
+  border: 2px solid $ink;
+  padding: 32px;
+  margin-bottom: 16px;
+  background: $cream;
+  text-align: center;
+  perspective: 600px;
+}
+
+.coinContainer {
+  display: inline-block;
+  width: 128px;
+  height: 128px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+
+  &.flipping {
+    animation: coinFlip 1s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+}
+
+.coinFace {
+  position: absolute;
+  inset: 0;
+  width: 128px;
+  height: 128px;
+  border: 4px solid $ink;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  background: $cream;
+  backface-visibility: hidden;
+
+  &.back {
+    transform: rotateY(180deg);
+  }
+}
+
+.coinLabel {
+  font-size: 10px;
+  color: $muted;
+  margin-top: 16px;
+  letter-spacing: 0.2em;
+}
+
+// Generate keyframes with a loop
+@keyframes coinFlip {
+  @for $i from 0 through 10 {
+    $percent: $i * 10%;
+    $rotation: $i * 180deg;
+    $progress: math.div($i, 10);
+    $arc: -50px * 4 * $progress * (1 - $progress);
+    
+    #{$percent} {
+      transform: rotateY($rotation) translateY($arc);
+    }
+  }
+}
+
+// =============================================================================
+// GUESS SELECTION
+// =============================================================================
+
+.guessGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: $ink;
+  margin-bottom: 16px;
+}
+
+.guessButton {
+  padding: 16px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+  background: $cream;
+  color: $ink;
+
+  &:hover {
+    background: $cream-dark;
+  }
+
+  &.active {
+    background: $ink;
+    color: $cream;
+  }
+}
+
+.guessLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+
+.guessValue {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+// =============================================================================
+// BET AMOUNT
+// =============================================================================
+
+.betBox {
+  border: 2px solid $ink;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: $cream;
+}
+
+.betLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: $muted;
+  margin-bottom: 12px;
+}
+
+.betPresets {
+  display: flex;
+  gap: 2px;
+}
+
+.betPreset {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid $ink;
+  background: $cream;
+  color: $ink;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+
+  &:hover {
+    background: $cream-dark;
+  }
+
+  &.active {
+    background: $ink;
+    color: $cream;
+  }
+}
+
+.betInputWrapper {
+  margin-top: 12px;
+}
+
+.betInput {
+  width: 100%;
+  border: 2px solid $ink;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: inherit;
+  background: transparent;
+
+  &:focus {
+    outline: none;
+    background: $cream-dark;
+  }
+}
+
+// =============================================================================
+// FLIP BUTTON
+// =============================================================================
+
+.flipButton {
+  width: 100%;
+  padding: 24px;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  border: 2px solid $ink;
+  background: $ink;
+  color: $cream;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  font-family: inherit;
+
+  &:hover:not(:disabled) {
+    background: $ink-light;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: $cream-dark;
+    color: $muted;
+    cursor: not-allowed;
+  }
+}
+
+// =============================================================================
+// RESULT MESSAGE
+// =============================================================================
+
+.result {
+  margin-top: 16px;
+  padding: 16px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid $ink;
+  background: $ink;
+  color: $cream;
+  animation: resultPop 0.3s ease-out;
+
+  &.loss {
+    border-color: $error;
+    background: $error;
+  }
+}
+
+@keyframes resultPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// =============================================================================
+// HISTORY
+// =============================================================================
+
+.historyBox {
+  margin-top: 24px;
+  border: 2px solid $ink;
+  background: $cream;
+}
+
+.historyHeader {
+  padding: 12px;
+  border-bottom: 2px solid $ink;
+  background: $cream-dark;
+}
+
+.historyLabel {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: $muted;
+}
+
+.historyEmpty {
+  padding: 16px;
+  text-align: center;
+  color: $muted-light;
+  font-size: 14px;
+}
+
+.historyList {
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 2px solid $ink;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.historyResult {
+  font-weight: bold;
+}
+
+.historyAmount {
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+
+  &.loss {
+    color: $error;
+  }
+}
+
+// =============================================================================
+// RESET BUTTON
+// =============================================================================
+
+.resetButton {
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  border: 2px solid $ink;
+  background: $accent;
+  color: $ink;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-family: inherit;
+
+  &:hover {
+    background: lighten($accent, 5%);
+  }
+}
+
+// =============================================================================
+// FOOTER
+// =============================================================================
+
+.footer {
+  margin-top: 32px;
+  padding-bottom: 32px;
+  text-align: center;
+}
+
+.footerText {
+  font-size: 10px;
+  color: $muted-light;
+  letter-spacing: 0.2em;
+}
+
+.footerVersion {
+  font-size: 10px;
+  color: $muted-lighter;
+  margin-top: 4px;
+}
