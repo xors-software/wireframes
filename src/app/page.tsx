@@ -29,9 +29,9 @@ const products: Item[] = [
   },
   {
     id: 3,
-    label: 'slopless.ai',
+    label: 'slopless.work',
     description: 'Make vibe-coded apps production quality.',
-    href: 'https://slopless.ai',
+    href: 'https://slopless.work',
   },
 ]
 

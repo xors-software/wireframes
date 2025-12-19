@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 // =============================================================================
 // VARIABLES
@@ -460,7 +461,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-family: inherit;
 
   &:hover {
-    background: lighten($accent, 5%);
+    background: color.adjust($accent, $lightness: 5%);
   }
 }
 
