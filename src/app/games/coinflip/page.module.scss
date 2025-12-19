@@ -84,6 +84,22 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   color: $ink;
 }
 
+.connected {
+  color: #16a34a;
+}
+
+.tokenBadge {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-left: 8px;
+  font-size: 8px;
+  font-weight: 600;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
 // =============================================================================
 // BALANCE DISPLAY
 // =============================================================================

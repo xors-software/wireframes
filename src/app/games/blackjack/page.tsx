@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useTokens } from "@/hooks/useTokens";
 
 // Dynamic import for Three.js components (avoid SSR issues)
 const GameTableCanvas = dynamic(
@@ -9,6 +10,12 @@ const GameTableCanvas = dynamic(
   { ssr: false }
 );
 import { Celebration } from "@/components/Celebration";
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+
+const API_BASE = 'https://api.xors.xyz';
 
 // =============================================================================
 // TYPES
@@ -31,13 +38,20 @@ type Rank =
   | "K";
 
 interface Card {
+  suit: Suit | "?";
+  rank: Rank | "?";
+  hidden?: boolean;
+}
+
+// Type for display cards (compatible with GameTableCanvas)
+interface DisplayCard {
   suit: Suit;
   rank: Rank;
   hidden?: boolean;
 }
 
-type GameState = "betting" | "playing" | "dealer_turn" | "finished";
-type Result = "win" | "lose" | "push" | "blackjack" | null;
+type GamePhase = "betting" | "playing" | "dealer_turn" | "finished";
+type Result = "win" | "lose" | "push" | "blackjack" | "bust" | "dealer_bust" | null;
 
 // =============================================================================
 // CONSTANTS
@@ -60,6 +74,7 @@ const RANKS: Rank[] = [
   "K",
 ];
 const STARTING_BALANCE = 1000;
+const DEFAULT_BET = 500;
 
 // =============================================================================
 // GAME LOGIC
@@ -118,15 +133,19 @@ function isBlackjack(cards: Card[]): boolean {
 // =============================================================================
 
 export default function Blackjack() {
+  const tokens = useTokens(STARTING_BALANCE);
+  
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
   const [dealerHand, setDealerHand] = useState<Card[]>([]);
-  const [gameState, setGameState] = useState<GameState>("betting");
+  const [gamePhase, setGamePhase] = useState<GamePhase>("betting");
   const [result, setResult] = useState<Result>(null);
 
+  // Server game state token (for connected mode)
+  const [serverGameState, setServerGameState] = useState<string | null>(null);
+
   // Wagering state
-  const [balance, setBalance] = useState(STARTING_BALANCE);
-  const [currentBet, setCurrentBet] = useState(0);
+  const [currentBet, setCurrentBet] = useState(DEFAULT_BET);
   const [lastBet, setLastBet] = useState(0);
 
   // Stats
@@ -136,6 +155,16 @@ export default function Blackjack() {
   // Celebration effects
   const [showCelebration, setShowCelebration] = useState<"win" | "blackjack" | "lose" | null>(null);
   const [celebrationAmount, setCelebrationAmount] = useState(0);
+  
+  // Loading state for API calls
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Adjust current bet if it exceeds balance
+  useEffect(() => {
+    if (currentBet > tokens.balance && tokens.balance > 0) {
+      setCurrentBet(Math.min(DEFAULT_BET, tokens.balance));
+    }
+  }, [tokens.balance, currentBet]);
 
   // Clear celebration after animation
   useEffect(() => {
@@ -158,37 +187,98 @@ export default function Blackjack() {
   );
 
   const repeatLastBet = () => {
-    if (lastBet > 0 && lastBet <= balance) {
+    if (lastBet > 0 && lastBet <= tokens.balance) {
       setCurrentBet(lastBet);
     }
   };
 
-  const startGame = useCallback(() => {
-    if (currentBet === 0) return;
+  const startGame = useCallback(async () => {
+    if (currentBet === 0 || currentBet > tokens.balance || isLoading) return;
 
-    const newDeck = createDeck();
+    setIsLoading(true);
 
-    const [card1, deck1] = dealCard(newDeck);
-    const [card2, deck2] = dealCard(deck1);
-    const [card3, deck3] = dealCard(deck2);
-    const [card4, deck4] = dealCard(deck3);
+    // Server-side game when connected
+    if (tokens.isConnected && tokens.apiKey) {
+      try {
+        const response = await fetch(`${API_BASE}/api/games/blackjack`, {
+          method: 'POST',
+          headers: {
+            'x-api-key': tokens.apiKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ action: 'deal', bet: currentBet }),
+        });
 
-    const playerCards = [card1, card3];
-    const dealerCards = [{ ...card2, hidden: true }, card4];
+        const data = await response.json();
 
-    setDeck(deck4);
-    setPlayerHand(playerCards);
-    setDealerHand(dealerCards);
-    setGameState("playing");
-    setResult(null);
-    setBalance((prev) => prev - currentBet);
-    setLastBet(currentBet);
+        if (!response.ok || !data.success) {
+          console.error('Deal error:', data.message);
+          setIsLoading(false);
+          return;
+        }
 
-    // Check for player blackjack
-    if (isBlackjack(playerCards)) {
-      revealAndFinish(dealerCards, deck4, playerCards, currentBet);
+        const { status, playerHand: pHand, dealerHand: dHand, balance, gameState: gsToken, result: gameResult, payout } = data.data;
+
+        // Convert hidden cards for display
+        const displayDealerHand = dHand.map((c: Card) => 
+          c.rank === '?' ? { ...c, hidden: true } : c
+        );
+
+        setPlayerHand(pHand);
+        setDealerHand(displayDealerHand);
+        tokens.setBalance(balance);
+        setLastBet(currentBet);
+        setServerGameState(gsToken || null);
+
+        if (status === 'finished') {
+          // Blackjack on deal
+          setGamePhase('finished');
+          setResult(gameResult as Result);
+          setGamesPlayed(prev => prev + 1);
+          if (gameResult === 'blackjack') {
+            setWins(prev => prev + 1);
+            setShowCelebration('blackjack');
+            setCelebrationAmount(Math.floor(currentBet * 1.5));
+          }
+          setCurrentBet(0);
+        } else {
+          setGamePhase('playing');
+          setResult(null);
+        }
+      } catch (err) {
+        console.error('Game error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      // Local mode
+      tokens.addLocal(-currentBet);
+
+      const newDeck = createDeck();
+
+      const [card1, deck1] = dealCard(newDeck);
+      const [card2, deck2] = dealCard(deck1);
+      const [card3, deck3] = dealCard(deck2);
+      const [card4, deck4] = dealCard(deck3);
+
+      const playerCards = [card1, card3];
+      const dealerCards = [{ ...card2, hidden: true }, card4];
+
+      setDeck(deck4);
+      setPlayerHand(playerCards);
+      setDealerHand(dealerCards);
+      setGamePhase("playing");
+      setResult(null);
+      setLastBet(currentBet);
+      setServerGameState(null);
+      setIsLoading(false);
+
+      // Check for player blackjack
+      if (isBlackjack(playerCards)) {
+        revealAndFinish(dealerCards, deck4, playerCards, currentBet);
+      }
     }
-  }, [dealCard, currentBet]);
+  }, [dealCard, currentBet, tokens, isLoading]);
 
   const revealAndFinish = (
     dealer: Card[],
@@ -243,9 +333,14 @@ export default function Blackjack() {
     }
 
     setResult(gameResult);
-    setGameState("finished");
+    setGamePhase("finished");
     setGamesPlayed((prev) => prev + 1);
-    setBalance((prev) => prev + payout);
+    
+    // Add payout to balance (local mode only - server mode handles this in stand())
+    if (payout > 0) {
+      tokens.addLocal(payout);
+    }
+    
     if (gameResult === "win" || gameResult === "blackjack") {
       setWins((prev) => prev + 1);
       setShowCelebration(gameResult);
@@ -256,36 +351,137 @@ export default function Blackjack() {
     setCurrentBet(0);
   };
 
-  const hit = () => {
-    if (gameState !== "playing") return;
+  const hit = useCallback(async () => {
+    if (gamePhase !== "playing" || isLoading) return;
 
-    const [newCard, newDeck] = dealCard(deck);
-    const newHand = [...playerHand, newCard];
-    setPlayerHand(newHand);
-    setDeck(newDeck);
+    // Server-side when connected
+    if (tokens.isConnected && tokens.apiKey && serverGameState) {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${API_BASE}/api/games/blackjack`, {
+          method: 'POST',
+          headers: {
+            'x-api-key': tokens.apiKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ action: 'hit', gameState: serverGameState }),
+        });
 
-    if (calculateHand(newHand) > 21) {
-      // Bust - reveal dealer and end
-      const revealedDealer = dealerHand.map((c) => ({ ...c, hidden: false }));
-      setDealerHand(revealedDealer);
-      setResult("lose");
-      setGameState("finished");
-      setGamesPlayed((prev) => prev + 1);
-      setCurrentBet(0);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error('Hit error:', data.message);
+          setIsLoading(false);
+          return;
+        }
+
+        const { status, playerHand: pHand, dealerHand: dHand, balance, gameState: gsToken, result: gameResult } = data.data;
+
+        setPlayerHand(pHand);
+        tokens.setBalance(balance);
+
+        if (status === 'finished') {
+          // Bust or game over
+          setDealerHand(dHand);
+          setGamePhase('finished');
+          setResult(gameResult as Result);
+          setGamesPlayed(prev => prev + 1);
+          setCurrentBet(0);
+          setServerGameState(null);
+        } else {
+          // Convert hidden cards for display
+          const displayDealerHand = dHand.map((c: Card) => 
+            c.rank === '?' ? { ...c, hidden: true } : c
+          );
+          setDealerHand(displayDealerHand);
+          setServerGameState(gsToken);
+        }
+      } catch (err) {
+        console.error('Hit error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      // Local mode
+      const [newCard, newDeck] = dealCard(deck);
+      const newHand = [...playerHand, newCard];
+      setPlayerHand(newHand);
+      setDeck(newDeck);
+
+      if (calculateHand(newHand) > 21) {
+        // Bust - reveal dealer and end
+        const revealedDealer = dealerHand.map((c) => ({ ...c, hidden: false }));
+        setDealerHand(revealedDealer);
+        setResult("lose");
+        setGamePhase("finished");
+        setGamesPlayed((prev) => prev + 1);
+        setCurrentBet(0);
+      }
     }
-  };
+  }, [gamePhase, isLoading, tokens, serverGameState, dealCard, deck, playerHand, dealerHand]);
 
-  const stand = () => {
-    if (gameState !== "playing") return;
-    revealAndFinish(dealerHand, deck, playerHand, lastBet);
-  };
+  const stand = useCallback(async () => {
+    if (gamePhase !== "playing" || isLoading) return;
+
+    // Server-side when connected
+    if (tokens.isConnected && tokens.apiKey && serverGameState) {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${API_BASE}/api/games/blackjack`, {
+          method: 'POST',
+          headers: {
+            'x-api-key': tokens.apiKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ action: 'stand', gameState: serverGameState }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error('Stand error:', data.message);
+          setIsLoading(false);
+          return;
+        }
+
+        const { playerHand: pHand, dealerHand: dHand, balance, result: gameResult, payout } = data.data;
+
+        setPlayerHand(pHand);
+        setDealerHand(dHand);
+        tokens.setBalance(balance);
+        setGamePhase('finished');
+        setResult(gameResult as Result);
+        setGamesPlayed(prev => prev + 1);
+        setServerGameState(null);
+
+        if (gameResult === 'win' || gameResult === 'dealer_bust') {
+          setWins(prev => prev + 1);
+          setShowCelebration('win');
+          setCelebrationAmount(lastBet);
+        } else if (gameResult === 'blackjack') {
+          setWins(prev => prev + 1);
+          setShowCelebration('blackjack');
+          setCelebrationAmount(Math.floor(lastBet * 1.5));
+        }
+        setCurrentBet(0);
+      } catch (err) {
+        console.error('Stand error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      // Local mode
+      revealAndFinish(dealerHand, deck, playerHand, lastBet);
+    }
+  }, [gamePhase, isLoading, tokens, serverGameState, dealerHand, deck, playerHand, lastBet]);
 
   const newGame = () => {
     setPlayerHand([]);
     setDealerHand([]);
-    setGameState("betting");
+    setGamePhase("betting");
     setResult(null);
     setCurrentBet(0);
+    setServerGameState(null);
   };
 
   const playerTotal = calculateHand(playerHand);
@@ -311,9 +507,10 @@ export default function Blackjack() {
             </div>
           </div>
           <div className="bj-stats">
+            {tokens.isConnected && <span className="connection-badge">LIVE</span>}
             <div className="stat-box stat-balance">
               <span className="stat-label">BALANCE</span>
-              <span className="stat-value">${balance.toLocaleString()}</span>
+              <span className="stat-value">${tokens.balance.toLocaleString()}</span>
             </div>
           </div>
         </header>
@@ -325,7 +522,7 @@ export default function Blackjack() {
             <div className="hand-header dealer-header">
               <span className="hand-label">DEALER</span>
               <span className="hand-total">
-                {gameState === "playing" ? "?" : dealerTotal || "—"}
+                {gamePhase === "playing" ? "?" : dealerTotal || "—"}
               </span>
             </div>
           </div>
@@ -334,8 +531,8 @@ export default function Blackjack() {
           <div className="cards-table">
             {/* Always keep Canvas mounted to prevent WebGL context loss */}
             <GameTableCanvas 
-              dealerCards={dealerHand} 
-              playerCards={playerHand} 
+              dealerCards={dealerHand.map(c => c.rank === '?' || c.suit === '?' ? { ...c, suit: '♠' as Suit, rank: 'A' as Rank, hidden: true } : c) as DisplayCard[]} 
+              playerCards={playerHand.filter(c => c.rank !== '?' && c.suit !== '?') as DisplayCard[]} 
             />
             {dealerHand.length === 0 && playerHand.length === 0 && (
               <div className="empty-table-overlay">Place your bet to start</div>
@@ -354,17 +551,17 @@ export default function Blackjack() {
 
           {/* Result Display */}
           {result && (
-            <div className={`result-display result-${result}`}>
+            <div className={`result-display result-${result === 'dealer_bust' ? 'win' : result === 'bust' ? 'lose' : result}`}>
               <span className="result-text">
                 {result === "blackjack" && "BLACKJACK!"}
-                {result === "win" && "YOU WIN"}
-                {result === "lose" && "DEALER WINS"}
+                {(result === "win" || result === "dealer_bust") && "YOU WIN"}
+                {(result === "lose" || result === "bust") && "DEALER WINS"}
                 {result === "push" && "PUSH"}
               </span>
               <span className="result-payout">
                 {result === "blackjack" && `+$${Math.floor(lastBet * 1.5)}`}
-                {result === "win" && `+$${lastBet}`}
-                {result === "lose" && `-$${lastBet}`}
+                {(result === "win" || result === "dealer_bust") && `+$${lastBet}`}
+                {(result === "lose" || result === "bust") && `-$${lastBet}`}
                 {result === "push" && "BET RETURNED"}
               </span>
             </div>
@@ -372,7 +569,7 @@ export default function Blackjack() {
         </div>
 
         {/* Betting Area */}
-        {gameState === "betting" && (
+        {gamePhase === "betting" && (
           <div className="betting-area">
             <div className="bet-input-container">
               <span className="bet-label">ENTER BET</span>
@@ -384,7 +581,7 @@ export default function Blackjack() {
                   value={currentBet || ""}
                   onChange={(e) => {
                     const value = parseInt(e.target.value) || 0;
-                    setCurrentBet(Math.min(Math.max(0, value), balance));
+                    setCurrentBet(Math.min(Math.max(0, value), tokens.balance));
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && currentBet > 0) {
@@ -393,14 +590,14 @@ export default function Blackjack() {
                   }}
                   placeholder="0"
                   min={0}
-                  max={balance}
+                  max={tokens.balance}
                   autoFocus
                 />
               </div>
-              <span className="bet-max">MAX: ${balance.toLocaleString()}</span>
+              <span className="bet-max">MAX: ${tokens.balance.toLocaleString()}</span>
             </div>
 
-            {lastBet > 0 && lastBet <= balance && (
+            {lastBet > 0 && lastBet <= tokens.balance && (
               <button
                 className="btn btn-secondary btn-repeat"
                 onClick={repeatLastBet}
@@ -412,40 +609,44 @@ export default function Blackjack() {
             <button
               className="btn btn-deal"
               onClick={startGame}
-              disabled={currentBet === 0}
+              disabled={currentBet === 0 || isLoading}
             >
-              DEAL
+              {isLoading ? 'DEALING...' : 'DEAL'}
             </button>
           </div>
         )}
 
         {/* Playing Controls */}
-        {gameState === "playing" && (
+        {gamePhase === "playing" && (
           <div className="controls">
             <div className="current-bet-indicator">
               <span>BET: ${lastBet}</span>
             </div>
             <div className="action-buttons">
-              <button className="btn btn-hit" onClick={hit}>
-                HIT
+              <button className="btn btn-hit" onClick={hit} disabled={isLoading}>
+                {isLoading ? '...' : 'HIT'}
               </button>
-              <button className="btn btn-stand" onClick={stand}>
-                STAND
+              <button className="btn btn-stand" onClick={stand} disabled={isLoading}>
+                {isLoading ? '...' : 'STAND'}
               </button>
             </div>
           </div>
         )}
 
         {/* Game Over Controls */}
-        {gameState === "finished" && (
+        {gamePhase === "finished" && (
           <div className="controls">
-            {balance === 0 ? (
+            {tokens.balance === 0 ? (
               <div className="broke-message">
                 <p>You&apos;re out of chips!</p>
                 <button
                   className="btn btn-new"
                   onClick={() => {
-                    setBalance(STARTING_BALANCE);
+                    if (tokens.isConnected) {
+                      tokens.refetch();
+                    } else {
+                      tokens.addLocal(STARTING_BALANCE);
+                    }
                     newGame();
                   }}
                 >
@@ -557,6 +758,17 @@ export default function Blackjack() {
           display: flex;
           gap: 8px;
           align-items: center;
+        }
+
+        .connection-badge {
+          display: inline-block;
+          padding: 4px 8px;
+          font-size: 8px;
+          font-weight: 600;
+          background: #16a34a;
+          color: #fff;
+          border-radius: 3px;
+          letter-spacing: 0.1em;
         }
 
 
