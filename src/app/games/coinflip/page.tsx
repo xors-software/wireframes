@@ -1,47 +1,32 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import styles from "./page.module.scss";
+import { useState, useCallback, useRef } from "react";
+import dynamic from "next/dynamic";
 import { useTokens } from "@/hooks/useTokens";
 import { ApiKeyInput } from "@/components/ApiKeyInput";
-import { API_BASE, STARTING_BALANCE, DEFAULT_BET } from "@/lib/constants";
-import type { CoinflipHistoryItem } from "@/lib/types";
+import { API_BASE, STARTING_BALANCE } from "@/lib/constants";
 
-// =============================================================================
-// MAIN COMPONENT
-// =============================================================================
+// Dynamic import for Three.js component
+const Coin3DCanvas = dynamic(
+  () => import("@/components/Coin3D").then((mod) => mod.Coin3DCanvas),
+  { ssr: false }
+);
 
 export default function CoinflipGame() {
   const tokens = useTokens(STARTING_BALANCE);
   
-  const [gamesPlayed, setGamesPlayed] = useState(0);
-  const [gamesWon, setGamesWon] = useState(0);
-  const [totalWinnings, setTotalWinnings] = useState(0);
-  
-  const [guessHeads, setGuessHeads] = useState(true);
-  const [betAmount, setBetAmount] = useState(DEFAULT_BET);
   const [isFlipping, setIsFlipping] = useState(false);
-  const [lastResult, setLastResult] = useState<{
-    message: string;
-    won: boolean;
-  } | null>(null);
-  const [coinSide, setCoinSide] = useState<"heads" | "tails">("heads");
-  const [history, setHistory] = useState<CoinflipHistoryItem[]>([]);
-
-  // Adjust bet amount if it exceeds balance
-  useEffect(() => {
-    if (betAmount > tokens.balance) {
-      setBetAmount(Math.min(DEFAULT_BET, tokens.balance));
-    }
-  }, [tokens.balance, betAmount]);
+  const [displayResult, setDisplayResult] = useState<'heads' | 'tails' | null>(null);
+  const [animationResult, setAnimationResult] = useState<'heads' | 'tails' | null>(null);
+  const isFlippingRef = useRef(false);
 
   const flip = useCallback(async () => {
-    if (isFlipping || betAmount <= 0 || betAmount > tokens.balance) return;
+    if (isFlippingRef.current) return;
+    isFlippingRef.current = true;
 
-    setIsFlipping(true);
-    const guess = guessHeads ? 'heads' : 'tails';
+    let flipResult: 'heads' | 'tails';
 
-    // Server-side game when connected, local otherwise
+    // Get the result FIRST, before starting animation
     if (tokens.isConnected && tokens.apiKey) {
       try {
         const response = await fetch(`${API_BASE}/api/games/coinflip`, {
@@ -50,270 +35,104 @@ export default function CoinflipGame() {
             'x-api-key': tokens.apiKey,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ bet: betAmount, guess }),
+          body: JSON.stringify({ bet: 0, guess: 'heads' }),
         });
 
         const data = await response.json();
-
-        // Wait for animation
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        if (!response.ok || !data.success) {
-          setLastResult({ message: data.message || 'ERROR', won: false });
-          setIsFlipping(false);
-          setTimeout(() => setLastResult(null), 2000);
-          return;
-        }
-
-        const { result, won, balance: newBalance } = data.data;
-        const resultHeads = result === 'heads';
-
-        setCoinSide(resultHeads ? "heads" : "tails");
-        tokens.setBalance(newBalance);
-
-        if (won) {
-          setGamesWon(prev => prev + 1);
-          setTotalWinnings(prev => prev + betAmount);
+        if (data.success) {
+          flipResult = data.data.result;
         } else {
-          setTotalWinnings(prev => prev - betAmount);
+          flipResult = Math.random() < 0.5 ? 'heads' : 'tails';
         }
-
-        setGamesPlayed(prev => prev + 1);
-        setLastResult({
-          message: won ? `WIN +${betAmount}` : `LOSS -${betAmount}`,
-          won,
-        });
-        setHistory(prev => [
-          { resultHeads, won, betAmount },
-          ...prev.slice(0, 9),
-        ]);
-        setIsFlipping(false);
-        setTimeout(() => setLastResult(null), 2000);
-      } catch (err) {
-        console.error('Game error:', err);
-        setLastResult({ message: 'CONNECTION ERROR', won: false });
-        setIsFlipping(false);
-        setTimeout(() => setLastResult(null), 2000);
+      } catch {
+        flipResult = Math.random() < 0.5 ? 'heads' : 'tails';
       }
     } else {
-      // Local mode - client-side logic
-      tokens.addLocal(-betAmount);
-
-      // Simulate coin flip after animation
-      setTimeout(() => {
-        const resultHeads = Math.random() < 0.5;
-        const won = resultHeads === guessHeads;
-
-        setCoinSide(resultHeads ? "heads" : "tails");
-
-        if (won) {
-          tokens.addLocal(betAmount * 2);
-          setGamesWon(prev => prev + 1);
-          setTotalWinnings(prev => prev + betAmount);
-        } else {
-          setTotalWinnings(prev => prev - betAmount);
-        }
-
-        setGamesPlayed(prev => prev + 1);
-        setLastResult({
-          message: won ? `WIN +${betAmount}` : `LOSS -${betAmount}`,
-          won,
-        });
-        setHistory(prev => [
-          { resultHeads, won, betAmount },
-          ...prev.slice(0, 9),
-        ]);
-        setIsFlipping(false);
-        setTimeout(() => setLastResult(null), 2000);
-      }, 1000);
+      flipResult = Math.random() < 0.5 ? 'heads' : 'tails';
     }
-  }, [isFlipping, betAmount, tokens, guessHeads]);
 
-  const winRate = gamesPlayed > 0 ? Math.round((gamesWon / gamesPlayed) * 100) : 0;
+    // NOW start the animation with the known result
+    setAnimationResult(flipResult);
+    setIsFlipping(true);
+  }, [tokens]);
 
-  const betPresets = [100, 250, 500, 1000];
+  const handleFlipComplete = useCallback(() => {
+    setDisplayResult(animationResult);
+    setIsFlipping(false);
+    isFlippingRef.current = false;
+  }, [animationResult]);
 
-  const handleReset = () => {
-    if (tokens.isConnected) {
-      tokens.refetch();
-    } else {
-      tokens.addLocal(STARTING_BALANCE - tokens.balance);
+  const handleClick = () => {
+    if (!isFlippingRef.current) {
+      flip();
     }
-    setGamesPlayed(0);
-    setGamesWon(0);
-    setTotalWinnings(0);
-    setHistory([]);
-    setBetAmount(DEFAULT_BET);
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.gridOverlay} />
-      
-      <div className={styles.content}>
-        {/* Header */}
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
-            <h1>Coinflip</h1>
-            <div className={styles.subtitle}>WIREFRAMES</div>
-          </div>
-          <ApiKeyInput
-            apiKey={tokens.apiKey}
-            isConnected={tokens.isConnected}
-            isLoading={tokens.isLoading}
-            error={tokens.error}
-            onSetApiKey={tokens.setApiKey}
-            onClearApiKey={tokens.clearApiKey}
-          />
-        </header>
-
-        {/* Balance Display */}
-        <div className={styles.balanceBox}>
-          <div className={styles.balanceLabel}>BALANCE</div>
-          <div className={styles.balanceValue}>
-            {tokens.balance.toString().padStart(6, '0')}
-          </div>
-          <div className={styles.balanceUnit}>
-            {tokens.isConnected ? 'CREDITS' : 'TOKENS'}
-          </div>
-        </div>
-
-        {/* Stats Grid */}
-        <div className={styles.statsGrid}>
-          <div className={styles.statBox}>
-            <div className={styles.statLabel}>GAMES</div>
-            <div className={styles.statValue}>{gamesPlayed}</div>
-          </div>
-          <div className={styles.statBox}>
-            <div className={styles.statLabel}>WIN%</div>
-            <div className={styles.statValue}>{winRate}</div>
-          </div>
-          <div className={styles.statBox}>
-            <div className={styles.statLabel}>NET</div>
-            <div className={`${styles.statValue} ${totalWinnings < 0 ? styles.negative : ''}`}>
-              {totalWinnings >= 0 ? '+' : ''}{totalWinnings}
-            </div>
-          </div>
-        </div>
-
-        {/* Coin Display */}
-        <div className={styles.coinBox}>
-          <div 
-            className={`${styles.coinContainer} ${isFlipping ? styles.flipping : ''}`}
-            style={{ 
-              transform: isFlipping ? undefined : (coinSide === 'tails' ? 'rotateY(180deg)' : 'rotateY(0deg)')
-            }}
-          >
-            <div className={styles.coinFace}>H</div>
-            <div className={`${styles.coinFace} ${styles.back}`}>T</div>
-          </div>
-          <div className={styles.coinLabel}>
-            {isFlipping ? 'FLIPPING...' : coinSide.toUpperCase()}
-          </div>
-        </div>
-
-        {/* Guess Selection */}
-        <div className={styles.guessGrid}>
-          <button
-            onClick={() => setGuessHeads(true)}
-            className={`${styles.guessButton} ${guessHeads ? styles.active : ''}`}
-          >
-            <div className={styles.guessLabel}>SELECT</div>
-            <div className={styles.guessValue}>HEADS</div>
-          </button>
-          <button
-            onClick={() => setGuessHeads(false)}
-            className={`${styles.guessButton} ${!guessHeads ? styles.active : ''}`}
-          >
-            <div className={styles.guessLabel}>SELECT</div>
-            <div className={styles.guessValue}>TAILS</div>
-          </button>
-        </div>
-
-        {/* Bet Amount */}
-        <div className={styles.betBox}>
-          <div className={styles.betLabel}>BET AMOUNT</div>
-          <div className={styles.betPresets}>
-            {betPresets.map((amt) => (
-              <button
-                key={amt}
-                onClick={() => setBetAmount(Math.min(amt, tokens.balance))}
-                className={`${styles.betPreset} ${betAmount === amt ? styles.active : ''}`}
-              >
-                {amt}
-              </button>
-            ))}
-            <button
-              onClick={() => setBetAmount(tokens.balance)}
-              className={styles.betPreset}
-            >
-              MAX
-            </button>
-          </div>
-          <div className={styles.betInputWrapper}>
-            <input
-              type="number"
-              value={betAmount}
-              onChange={(e) => setBetAmount(Math.min(Number(e.target.value), tokens.balance))}
-              className={styles.betInput}
-              min={1}
-              max={tokens.balance}
-            />
-          </div>
-        </div>
-
-        {/* Flip Button */}
-        <button
-          onClick={flip}
-          disabled={isFlipping || betAmount <= 0 || betAmount > tokens.balance || tokens.isLoading}
-          className={styles.flipButton}
-        >
-          {isFlipping ? 'FLIPPING...' : 'FLIP'}
-        </button>
-
-        {/* Result Message */}
-        {lastResult && (
-          <div className={`${styles.result} ${!lastResult.won ? styles.loss : ''}`}>
-            {lastResult.message}
-          </div>
-        )}
-
-        {/* History */}
-        <div className={styles.historyBox}>
-          <div className={styles.historyHeader}>
-            <div className={styles.historyLabel}>HISTORY</div>
-          </div>
-          {history.length === 0 ? (
-            <div className={styles.historyEmpty}>NO DATA</div>
-          ) : (
-            <div className={styles.historyList}>
-              {history.map((h, i) => (
-                <div key={i}>
-                  <span className={styles.historyResult}>
-                    {h.resultHeads ? 'H' : 'T'}
-                  </span>
-                  <span className={`${styles.historyAmount} ${!h.won ? styles.loss : ''}`}>
-                    {h.won ? '+' : '-'}{h.betAmount}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Reset Button */}
-        {tokens.balance === 0 && (
-          <button onClick={handleReset} className={styles.resetButton}>
-            START OVER ({STARTING_BALANCE.toLocaleString()})
-          </button>
-        )}
-
-        {/* Footer */}
-        <footer className={styles.footer}>
-          <div className={styles.footerText}>WIREFRAMES</div>
-          <div className={styles.footerVersion}>V0.1.0</div>
-        </footer>
+    <div className="container">
+      {/* Mode Toggle */}
+      <div className="mode-toggle">
+        <ApiKeyInput
+          apiKey={tokens.apiKey}
+          isConnected={tokens.isConnected}
+          isLoading={tokens.isLoading}
+          error={tokens.error}
+          onSetApiKey={tokens.setApiKey}
+          onClearApiKey={tokens.clearApiKey}
+        />
       </div>
+
+      {/* 3D Coin */}
+      <div className="coin-container" onClick={handleClick}>
+        <Coin3DCanvas
+          isFlipping={isFlipping}
+          result={animationResult}
+          onFlipComplete={handleFlipComplete}
+        />
+      </div>
+
+      {/* Result Label */}
+      <div className="result-label">
+        {isFlipping ? 'FLIPPING...' : displayResult ? displayResult.toUpperCase() : 'CLICK TO FLIP'}
+      </div>
+
+      <style jsx>{`
+        .container {
+          min-height: 100vh;
+          background: #faf7f2;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          font-family: "SF Mono", "Monaco", "Inconsolata", monospace;
+        }
+
+        .mode-toggle {
+          position: fixed;
+          top: 24px;
+          right: 24px;
+          z-index: 100;
+        }
+
+        .coin-container {
+          width: 100%;
+          height: 60vh;
+          max-width: 600px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .result-label {
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.3em;
+          color: #1a1a1a;
+          margin-top: 24px;
+        }
+      `}</style>
     </div>
   );
 }
