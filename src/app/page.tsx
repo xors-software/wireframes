@@ -81,6 +81,12 @@ const games: Item[] = [
     description: 'Heads or tails. Double or nothing.',
     href: '/games/coinflip',
   },
+  {
+    id: 2,
+    label: 'polymarket',
+    description: 'Prediction markets. Bet on outcomes with XORS credits.',
+    href: '/games/polymarket',
+  },
 ]
 
 function formatNumber(n: number): string {

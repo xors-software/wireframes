@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useTokens } from "@/hooks/useTokens";
-import { ApiKeyInput } from "@/components/ApiKeyInput";
 import { API_BASE, STARTING_BALANCE } from "@/lib/constants";
 import styles from "./page.module.scss";
 
@@ -368,14 +367,60 @@ function ResolveModal({
   );
 }
 
-function ConnectionStatus({ connected }: { connected: boolean }) {
-  if (connected) return null;
+function LoginScreen({
+  apiKey,
+  setApiKey,
+  isLoading,
+  error,
+}: {
+  apiKey: string;
+  setApiKey: (key: string) => void;
+  isLoading: boolean;
+  error: string | null;
+}) {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputValue.trim()) {
+      setApiKey(inputValue.trim());
+    }
+  };
 
   return (
-    <div className={styles.connectionWarning}>
-      <div className={styles.warningTitle}>⚠ Not connected</div>
-      <div className={styles.warningText}>
-        Enter your API key to start betting with real XORS tokens
+    <div className={styles.loginScreen}>
+      <div className={styles.loginCard}>
+        <div className={styles.loginLogo}>∞</div>
+        <h1 className={styles.loginTitle}>POLYMARKET</h1>
+        <p className={styles.loginSubtitle}>PREDICTION MARKETS</p>
+        
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>API KEY</label>
+            <input
+              type="password"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Enter your XORS API key..."
+              className={styles.loginInput}
+              autoFocus
+            />
+          </div>
+          
+          {error && <p className={styles.loginError}>{error}</p>}
+          
+          <button
+            type="submit"
+            disabled={!inputValue.trim() || isLoading}
+            className={styles.loginButton}
+          >
+            {isLoading ? "CONNECTING..." : "CONNECT"}
+          </button>
+        </form>
+        
+        <p className={styles.loginHint}>
+          Create markets, place bets, and win XORS credits.
+        </p>
       </div>
     </div>
   );
@@ -552,6 +597,37 @@ export default function PolymarketGame() {
   const activeMarkets = filtered.filter((m) => !m.resolved);
   const resolvedMarkets = filtered.filter((m) => m.resolved);
 
+  // Show login screen if not connected
+  if (!tokens.isConnected && !tokens.isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.gridOverlay} />
+        <LoginScreen
+          apiKey={tokens.apiKey || ""}
+          setApiKey={tokens.setApiKey}
+          isLoading={tokens.isLoading}
+          error={tokens.error}
+        />
+      </div>
+    );
+  }
+
+  // Show loading state
+  if (tokens.isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.gridOverlay} />
+        <div className={styles.loginScreen}>
+          <div className={styles.loginCard}>
+            <div className={styles.loginLogo}>∞</div>
+            <h1 className={styles.loginTitle}>POLYMARKET</h1>
+            <p className={styles.loginSubtitle}>CONNECTING...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       {/* Grid overlay */}
@@ -567,27 +643,23 @@ export default function PolymarketGame() {
           </div>
         </div>
         <div className={styles.headerRight}>
-          <ApiKeyInput
-            apiKey={tokens.apiKey}
-            isConnected={tokens.isConnected}
-            isLoading={tokens.isLoading}
-            error={tokens.error}
-            onSetApiKey={tokens.setApiKey}
-            onClearApiKey={tokens.clearApiKey}
-          />
-          {tokens.isConnected && (
-            <div className={styles.balance}>
-              <span className={styles.balanceLabel}>BALANCE</span>
-              <span className={styles.balanceValue}>
-                ${(tokens.balance / 100).toFixed(2)}
-              </span>
-            </div>
-          )}
+          <div className={styles.balance}>
+            <span className={styles.balanceLabel}>BALANCE</span>
+            <span className={styles.balanceValue}>
+              ${(tokens.balance / 100).toFixed(2)}
+            </span>
+          </div>
+          <button
+            onClick={tokens.clearApiKey}
+            className={styles.logoutButton}
+            title="Disconnect"
+          >
+            ✕
+          </button>
         </div>
       </header>
 
       <main className={styles.main}>
-        <ConnectionStatus connected={tokens.isConnected} />
 
         {/* Search and Create */}
         <div className={styles.toolbar}>

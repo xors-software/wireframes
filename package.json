@@ -13,6 +13,7 @@
     "@react-three/fiber": "^9.4.2",
     "@types/three": "^0.182.0",
     "next": "16.1.0",
+    "next-auth": "^5.0.0-beta.30",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "sass": "^1.97.0",
