@@ -19,7 +19,7 @@ const products: Item[] = [
     id: 1,
     label: 'www-starter',
     description: 'Production-ready Next.js starter with auth, payments, and deployment.',
-    href: '#',
+    href: 'https://github.com/xors-software/www-starter',
   },
   {
     id: 2,
