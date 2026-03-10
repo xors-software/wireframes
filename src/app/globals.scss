@@ -1,14 +1,33 @@
 @use "sass:math";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-$bg: #ffffff;
-$surface: #fafafa;
-$border: #e5e5e5;
-$text: #0a0a0a;
-$text-secondary: #525252;
-$text-muted: #a3a3a3;
-$accent: #0a0a0a;
-$font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$stone: #B5B5B5;
+$stone-light: #C8C8C8;
+$stone-dark: #9A9A9A;
+$ink: #0A0A0A;
+$ink-soft: #1A1A1A;
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$gold: #C8A843;
+$gold-dim: #A08A38;
+
+$text-on-stone: #1A1A1A;
+$text-muted-on-stone: #4A4A4A;
+$text-on-ink: #E0D8CC;
+$text-muted-on-ink: #8A8278;
+$text-on-cream: #1A1A1A;
+$text-muted-on-cream: #6B6560;
+
+$border-on-stone: rgba(0, 0, 0, 0.12);
+$border-on-ink: rgba(255, 255, 255, 0.08);
+$border-on-cream: rgba(0, 0, 0, 0.08);
+
+$font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+$font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+$destructive: #C44;
+$destructive-hover: #A33;
 
 * {
   margin: 0;
@@ -17,15 +36,17 @@ $font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 html {
-  font-size: 15px;
+  font-size: 16px;
+  text-transform: lowercase;
 }
 
 body {
-  font-family: $font;
-  background: $bg;
-  color: $text;
-  line-height: 1.6;
+  font-family: $font-body;
+  background: $stone;
+  color: $text-on-stone;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -34,8 +55,22 @@ a {
 }
 
 ::selection {
-  background: $text;
-  color: $bg;
+  background: $ink;
+  color: $cream;
+}
+
+button {
+  text-transform: lowercase;
+  font-family: $font-ui;
+}
+
+input, select, textarea {
+  text-transform: lowercase;
+  font-family: $font-ui;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: lowercase;
 }
 
 // =============================================================================
@@ -56,16 +91,13 @@ a {
   animation: coinFlip 1s cubic-bezier(0.17, 0.67, 0.12, 0.99);
 }
 
-// Generate keyframes with a loop
 @keyframes coinFlip {
   @for $i from 0 through 10 {
     $percent: $i * 10%;
     $rotation: $i * 180deg;
-    
-    // Parabolic arc for translateY
     $progress: math.div($i, 10);
     $arc: -50px * 4 * $progress * (1 - $progress);
-    
+
     #{$percent} {
       transform: rotateY($rotation) translateY($arc);
     }
@@ -78,7 +110,7 @@ a {
 
 input[type="number"] {
   -moz-appearance: textfield;
-  
+
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;

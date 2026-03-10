@@ -51,7 +51,7 @@ export function Celebration({ type, amount }: CelebrationProps) {
         alignItems: "center",
         justifyContent: "center",
         zIndex: 1000,
-        backgroundColor: "#ff6b00",
+        backgroundColor: "#C8A843",
         opacity: phase === 3 ? 0 : 1,
         transition: "opacity 300ms ease-out",
       }}

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.scss'
 
 export const metadata: Metadata = {
-  title: 'XORS Wireframes',
-  description: 'UI examples and components',
+  title: 'things \u2014 xors',
+  description: 'games, products, and experiments. restoring faith in human capability and craft.',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },

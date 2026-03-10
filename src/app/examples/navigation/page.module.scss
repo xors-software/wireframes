@@ -1,80 +1,87 @@
-$text: #0a0a0a;
-$text-secondary: #525252;
-$text-muted: #a3a3a3;
-$border: #e5e5e5;
-$bg: #ffffff;
-$bg-hover: #fafafa;
-$bg-dark: #0a0a0a;
+$ink: #0A0A0A;
+$ink-soft: #1A1A1A;
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$gold: #C8A843;
+$text: #1A1A1A;
+$text-secondary: #6B6560;
+$text-muted: #9A9590;
+$border: rgba(0, 0, 0, 0.08);
+$surface: rgba(0, 0, 0, 0.04);
+
+$font-body: 'Source Serif 4', Georgia, serif;
+$font-ui: 'Inter', -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
 
 .page {
   max-width: 900px;
 }
 
 .header {
-  margin-bottom: 48px;
-  padding-bottom: 24px;
+  margin-bottom: 56px;
+  padding-bottom: 28px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: $text-muted;
-  font-variant-numeric: tabular-nums;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  color: $gold;
+  letter-spacing: 0.06em;
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 8px 0;
+  font-family: $font-body;
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 10px 0;
+  color: $text;
 }
 
 .description {
-  font-size: 0.875rem;
+  font-family: $font-body;
+  font-size: 0.9375rem;
   color: $text-secondary;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .section {
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 
 .sectionTitle {
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-family: $font-ui;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: $text;
 }
 
 .sectionDescription {
+  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-
-// =============================================================================
-// PREVIEW CONTAINERS
-// =============================================================================
 
 .preview {
   border: 1px solid $border;
-  border-radius: 8px;
   padding: 24px;
-  background: $bg;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .previewMobile {
   border: 1px solid $border;
-  border-radius: 8px;
-  background: $bg;
+  background: rgba(255, 255, 255, 0.3);
   max-width: 320px;
   overflow: hidden;
 }
 
 .previewSidebar {
   border: 1px solid $border;
-  border-radius: 8px;
-  background: $bg;
+  background: rgba(255, 255, 255, 0.3);
   display: flex;
   height: 300px;
   overflow: hidden;
@@ -82,14 +89,9 @@ $bg-dark: #0a0a0a;
 
 .previewFooter {
   border: 1px solid $border;
-  border-radius: 8px;
-  background: $bg-hover;
+  background: $surface;
   padding: 32px;
 }
-
-// =============================================================================
-// SIMPLE NAV
-// =============================================================================
 
 .navSimple {
   display: flex;
@@ -98,6 +100,7 @@ $bg-dark: #0a0a0a;
 }
 
 .navLogo {
+  font-family: $font-ui;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -108,19 +111,16 @@ $bg-dark: #0a0a0a;
 }
 
 .navLink {
+  font-family: $font-ui;
   font-size: 0.875rem;
   color: $text-secondary;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease;
 
   &:hover {
     color: $text;
   }
 }
-
-// =============================================================================
-// NAV WITH CTA
-// =============================================================================
 
 .navWithCta {
   display: flex;
@@ -140,6 +140,7 @@ $bg-dark: #0a0a0a;
 }
 
 .navLinkSecondary {
+  font-family: $font-ui;
   font-size: 0.875rem;
   color: $text-secondary;
   text-decoration: none;
@@ -151,24 +152,20 @@ $bg-dark: #0a0a0a;
 
 .btnPrimary {
   padding: 8px 16px;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  font-family: inherit;
-  background: $text;
-  color: $bg;
+  font-family: $font-ui;
+  background: $ink;
+  color: $cream;
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.2s ease;
 
   &:hover {
-    background: $text-secondary;
+    background: $ink-soft;
   }
 }
-
-// =============================================================================
-// NAV WITH DROPDOWN
-// =============================================================================
 
 .navWithDropdown {
   display: flex;
@@ -188,7 +185,7 @@ $bg-dark: #0a0a0a;
   color: $text-secondary;
   background: none;
   border: none;
-  font-family: inherit;
+  font-family: $font-ui;
   cursor: pointer;
   padding: 0;
 
@@ -206,26 +203,25 @@ $bg-dark: #0a0a0a;
   top: 100%;
   left: 0;
   margin-top: 8px;
-  min-width: 160px;
-  background: $bg;
-  border: 1px solid $border;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  background: $cream;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   padding: 4px;
   z-index: 10;
 }
 
 .dropdownItem {
   display: block;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text;
   text-decoration: none;
-  border-radius: 4px;
   transition: background 0.15s ease;
 
   &:hover {
-    background: $bg-hover;
+    background: $surface;
   }
 }
 
@@ -234,10 +230,6 @@ $bg-dark: #0a0a0a;
   background: $border;
   margin: 4px 0;
 }
-
-// =============================================================================
-// MOBILE NAV
-// =============================================================================
 
 .navMobile {
   display: flex;
@@ -286,6 +278,7 @@ $bg-dark: #0a0a0a;
 }
 
 .mobileLink {
+  font-family: $font-ui;
   padding: 12px 0;
   font-size: 0.9375rem;
   color: $text;
@@ -297,13 +290,9 @@ $bg-dark: #0a0a0a;
   }
 
   &:hover {
-    color: $text-secondary;
+    color: $gold;
   }
 }
-
-// =============================================================================
-// BREADCRUMBS
-// =============================================================================
 
 .breadcrumbs {
   display: flex;
@@ -313,13 +302,13 @@ $bg-dark: #0a0a0a;
 }
 
 .breadcrumbLink {
+  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
 
   &:hover {
-    color: $text;
-    text-decoration: underline;
+    color: $gold;
   }
 }
 
@@ -329,32 +318,28 @@ $bg-dark: #0a0a0a;
 }
 
 .breadcrumbCurrent {
+  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text;
   font-weight: 500;
 }
 
-// =============================================================================
-// TABS
-// =============================================================================
-
 .tabs {
   display: flex;
   gap: 4px;
   border-bottom: 1px solid $border;
-  padding-bottom: -1px;
 }
 
 .tab {
   padding: 10px 16px;
-  font-size: 0.875rem;
-  font-family: inherit;
+  font-size: 0.8125rem;
+  font-family: $font-ui;
   color: $text-secondary;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   margin-bottom: -1px;
 
   &:hover {
@@ -364,18 +349,14 @@ $bg-dark: #0a0a0a;
 
 .tabActive {
   color: $text;
-  border-bottom-color: $text;
+  border-bottom-color: $gold;
 }
-
-// =============================================================================
-// SIDEBAR
-// =============================================================================
 
 .sidebar {
   width: 200px;
   flex-shrink: 0;
   border-right: 1px solid $border;
-  background: $bg-hover;
+  background: $surface;
   display: flex;
   flex-direction: column;
 }
@@ -386,6 +367,7 @@ $bg-dark: #0a0a0a;
 }
 
 .sidebarLogo {
+  font-family: $font-ui;
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -403,20 +385,20 @@ $bg-dark: #0a0a0a;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
+  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
-  border-radius: 6px;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background: $bg;
+    background: rgba(255, 255, 255, 0.5);
     color: $text;
   }
 }
 
 .sidebarLinkActive {
-  background: $bg;
+  background: rgba(255, 255, 255, 0.5);
   color: $text;
   font-weight: 500;
 }
@@ -440,12 +422,9 @@ $bg-dark: #0a0a0a;
   align-items: center;
   justify-content: center;
   color: $text-muted;
+  font-family: $font-ui;
   font-size: 0.875rem;
 }
-
-// =============================================================================
-// PAGINATION
-// =============================================================================
 
 .pagination {
   display: flex;
@@ -458,33 +437,33 @@ $bg-dark: #0a0a0a;
   height: 36px;
   padding: 0 8px;
   font-size: 0.875rem;
-  font-family: inherit;
+  font-family: $font-ui;
   color: $text;
-  background: $bg;
+  background: rgba(255, 255, 255, 0.3);
   border: 1px solid $border;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: $bg-hover;
-    border-color: $text-muted;
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.16);
   }
 }
 
 .pageBtnActive {
-  background: $text;
-  color: $bg;
-  border-color: $text;
+  background: $ink;
+  color: $cream;
+  border-color: $ink;
 
   &:hover {
-    background: $text-secondary;
-    border-color: $text-secondary;
+    background: $ink-soft;
+    border-color: $ink-soft;
   }
 }
 
 .pageBtnDisabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -493,10 +472,6 @@ $bg-dark: #0a0a0a;
   color: $text-muted;
   font-size: 0.875rem;
 }
-
-// =============================================================================
-// FOOTER
-// =============================================================================
 
 .footer {
   display: grid;
@@ -515,21 +490,22 @@ $bg-dark: #0a0a0a;
 }
 
 .footerHeading {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   color: $text;
   margin-bottom: 4px;
 }
 
 .footerLink {
+  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease;
 
   &:hover {
-    color: $text;
+    color: $gold;
   }
 }

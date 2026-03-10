@@ -1,0 +1,165 @@
+$ink: #0A0A0A;
+$cream: #F5F2ED;
+$gold: #C8A843;
+$text: #1A1A1A;
+$text-secondary: #4A4540;
+$text-muted: #8A8580;
+$border: rgba(0, 0, 0, 0.06);
+
+$font-body: 'Source Serif 4', Georgia, serif;
+$font-ui: 'Inter', -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-bottom: 48px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 64px;
+    margin-bottom: 56px;
+  }
+}
+
+.headerLeft {
+  @media (min-width: 768px) {
+    flex: 0 0 280px;
+  }
+}
+
+.headerRight {
+  flex: 1;
+}
+
+.title {
+  font-family: $font-body;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: $text;
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+}
+
+.updated {
+  font-family: $font-ui;
+  font-size: 0.75rem;
+  color: $text-muted;
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+}
+
+.introText {
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: $text-secondary;
+
+  a {
+    color: $text;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.2);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+
+    &:hover {
+      text-decoration-color: $gold;
+    }
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-bottom: 48px;
+
+  @media (min-width: 768px) {
+    gap: 56px;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 64px;
+  }
+}
+
+.sectionLeft {
+  @media (min-width: 768px) {
+    flex: 0 0 280px;
+  }
+}
+
+.sectionRight {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-family: $font-ui;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: $text;
+  letter-spacing: 0.01em;
+}
+
+.paragraph {
+  font-family: $font-body;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: $text-secondary;
+  margin-top: 0;
+
+  & + & {
+    margin-top: 16px;
+  }
+
+  strong {
+    color: $text;
+    font-weight: 500;
+  }
+
+  a {
+    color: $text;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.2);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+
+    &:hover {
+      text-decoration-color: $gold;
+    }
+  }
+}
+
+.list {
+  font-family: $font-body;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: $text-secondary;
+  padding-left: 20px;
+  margin-top: 12px;
+
+  li {
+    margin-top: 8px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  strong {
+    color: $text;
+    font-weight: 500;
+  }
+}

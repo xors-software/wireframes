@@ -384,7 +384,7 @@ export default function Blackjack() {
             <div className={styles.logo}>∞</div>
             <div>
               <h1>BLACKJACK</h1>
-              <p className={styles.subtitle}>WIREFRAMES</p>
+              <p className={styles.subtitle}>THINGS</p>
             </div>
           </div>
           <div className={styles.headerRight}>
@@ -555,7 +555,7 @@ export default function Blackjack() {
                 : "—"}
             </span>
           </div>
-          <span className={styles.footerBrand}>WIREFRAMES</span>
+          <span className={styles.footerBrand}>THINGS</span>
         </footer>
       </div>
     </div>

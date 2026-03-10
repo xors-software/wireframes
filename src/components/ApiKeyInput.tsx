@@ -121,7 +121,7 @@ export function ApiKeyInput({
           font-family: inherit;
           border: none;
           background: #1a1a1a;
-          color: #faf7f2;
+          color: #F5F2ED;
           cursor: pointer;
           transition: all 0.15s ease;
           box-sizing: border-box;
@@ -176,7 +176,7 @@ export function ApiKeyInput({
         }
 
         .modal-content {
-          background: #faf7f2;
+          background: #F5F2ED;
           border: 2px solid #1a1a1a;
           max-width: 400px;
           width: 100%;
@@ -189,7 +189,7 @@ export function ApiKeyInput({
           align-items: center;
           padding: 16px;
           border-bottom: 2px solid #1a1a1a;
-          background: #f0ebe3;
+          background: #E8E0D0;
         }
 
         .modal-header h2 {
@@ -215,7 +215,7 @@ export function ApiKeyInput({
 
         .modal-close:hover {
           background: #1a1a1a;
-          color: #faf7f2;
+          color: #F5F2ED;
         }
 
         .modal-body {
@@ -245,7 +245,7 @@ export function ApiKeyInput({
         }
 
         .api-key-input:focus {
-          border-color: #ff6b00;
+          border-color: #C8A843;
         }
 
         .api-key-input::placeholder {
@@ -277,7 +277,7 @@ export function ApiKeyInput({
 
         .btn-connect {
           background: #1a1a1a;
-          color: #ff6b00;
+          color: #C8A843;
         }
 
         .btn-connect:hover:not(:disabled) {
@@ -286,7 +286,7 @@ export function ApiKeyInput({
 
         .btn-disconnect {
           background: #c25550;
-          color: #faf7f2;
+          color: #F5F2ED;
           border-color: #c25550;
         }
 

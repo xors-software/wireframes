@@ -1,61 +1,72 @@
-$text: #0a0a0a;
-$text-secondary: #525252;
-$text-muted: #a3a3a3;
-$border: #e5e5e5;
-$bg: #ffffff;
-$bg-hover: #fafafa;
-$error: #dc2626;
-$success: #16a34a;
+$ink: #0A0A0A;
+$ink-soft: #1A1A1A;
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$gold: #C8A843;
+$text: #1A1A1A;
+$text-secondary: #6B6560;
+$text-muted: #9A9590;
+$border: rgba(0, 0, 0, 0.08);
+$surface: rgba(0, 0, 0, 0.04);
+$error: #C44;
+$success: #4A8A5A;
+
+$font-body: 'Source Serif 4', Georgia, serif;
+$font-ui: 'Inter', -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
 
 .page {
   max-width: 800px;
 }
 
 .header {
-  margin-bottom: 48px;
-  padding-bottom: 24px;
+  margin-bottom: 56px;
+  padding-bottom: 28px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: $text-muted;
-  font-variant-numeric: tabular-nums;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  color: $gold;
+  letter-spacing: 0.06em;
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 8px 0;
+  font-family: $font-body;
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 10px 0;
+  color: $text;
 }
 
 .description {
-  font-size: 0.875rem;
+  font-family: $font-body;
+  font-size: 0.9375rem;
   color: $text-secondary;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .section {
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 
 .sectionTitle {
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-family: $font-ui;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: $text;
 }
 
 .sectionDescription {
+  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-
-// =============================================================================
-// FORM GRID
-// =============================================================================
 
 .formGrid {
   display: grid;
@@ -83,11 +94,8 @@ $success: #16a34a;
   gap: 6px;
 }
 
-// =============================================================================
-// LABELS
-// =============================================================================
-
 .label {
+  font-family: $font-ui;
   font-size: 0.8125rem;
   font-weight: 500;
   color: $text;
@@ -102,28 +110,26 @@ $success: #16a34a;
 }
 
 .helpText {
+  font-family: $font-ui;
   font-size: 0.75rem;
   color: $text-muted;
 }
 
 .errorText {
+  font-family: $font-ui;
   font-size: 0.75rem;
   color: $error;
 }
 
-// =============================================================================
-// TEXT INPUT
-// =============================================================================
-
 .input {
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 0.875rem;
-  font-family: inherit;
-  border: 1px solid $border;
-  border-radius: 6px;
-  background: $bg;
+  font-family: $font-ui;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.5);
   color: $text;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &::placeholder {
     color: $text-muted;
@@ -131,18 +137,18 @@ $success: #16a34a;
 
   &:focus {
     outline: none;
-    border-color: $text;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    border-color: $gold;
+    box-shadow: 0 0 0 3px rgba($gold, 0.12);
   }
 
   &:disabled {
-    background: $bg-hover;
+    background: $surface;
     color: $text-muted;
     cursor: not-allowed;
   }
 
   &:read-only {
-    background: $bg-hover;
+    background: $surface;
   }
 }
 
@@ -151,7 +157,7 @@ $success: #16a34a;
 
   &:focus {
     border-color: $success;
-    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+    box-shadow: 0 0 0 3px rgba($success, 0.12);
   }
 }
 
@@ -160,13 +166,9 @@ $success: #16a34a;
 
   &:focus {
     border-color: $error;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    box-shadow: 0 0 0 3px rgba($error, 0.12);
   }
 }
-
-// =============================================================================
-// TEXTAREA
-// =============================================================================
 
 .textarea {
   @extend .input;
@@ -174,14 +176,10 @@ $success: #16a34a;
   min-height: 80px;
 }
 
-// =============================================================================
-// SELECT
-// =============================================================================
-
 .select {
   @extend .input;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -191,10 +189,6 @@ $success: #16a34a;
     cursor: not-allowed;
   }
 }
-
-// =============================================================================
-// CHECKBOX
-// =============================================================================
 
 .checkboxGroup {
   display: flex;
@@ -206,11 +200,12 @@ $success: #16a34a;
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 
   &.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 }
@@ -221,8 +216,8 @@ $success: #16a34a;
   pointer-events: none;
 
   &:checked + .checkboxCustom {
-    background: $text;
-    border-color: $text;
+    background: $ink;
+    border-color: $ink;
 
     &::after {
       opacity: 1;
@@ -230,18 +225,18 @@ $success: #16a34a;
   }
 
   &:focus + .checkboxCustom {
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba($gold, 0.2);
   }
 }
 
 .checkboxCustom {
   width: 18px;
   height: 18px;
-  border: 2px solid $border;
-  border-radius: 4px;
-  background: $bg;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.5);
   position: relative;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   flex-shrink: 0;
 
   &::after {
@@ -251,17 +246,13 @@ $success: #16a34a;
     top: 2px;
     width: 4px;
     height: 8px;
-    border: solid $bg;
+    border: solid $cream;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     opacity: 0;
     transition: opacity 0.15s ease;
   }
 }
-
-// =============================================================================
-// RADIO
-// =============================================================================
 
 .radioGroup {
   display: flex;
@@ -273,6 +264,7 @@ $success: #16a34a;
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 }
@@ -283,7 +275,7 @@ $success: #16a34a;
   pointer-events: none;
 
   &:checked + .radioCustom {
-    border-color: $text;
+    border-color: $ink;
 
     &::after {
       opacity: 1;
@@ -292,35 +284,31 @@ $success: #16a34a;
   }
 
   &:focus + .radioCustom {
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba($gold, 0.2);
   }
 }
 
 .radioCustom {
   width: 18px;
   height: 18px;
-  border: 2px solid $border;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 50%;
-  background: $bg;
+  background: rgba(255, 255, 255, 0.5);
   position: relative;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   flex-shrink: 0;
 
   &::after {
     content: '';
     position: absolute;
     inset: 3px;
-    background: $text;
+    background: $ink;
     border-radius: 50%;
     opacity: 0;
     transform: scale(0);
     transition: all 0.15s ease;
   }
 }
-
-// =============================================================================
-// TOGGLE SWITCH
-// =============================================================================
 
 .switchGroup {
   display: flex;
@@ -332,11 +320,12 @@ $success: #16a34a;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: $font-ui;
   font-size: 0.875rem;
   max-width: 300px;
 
   &.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 }
 
@@ -346,7 +335,7 @@ $success: #16a34a;
   padding: 2px;
   border: none;
   border-radius: 12px;
-  background: $border;
+  background: rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: background 0.2s ease;
   position: relative;
@@ -356,55 +345,47 @@ $success: #16a34a;
   }
 
   &:focus-visible {
-    outline: 2px solid $text;
+    outline: 2px solid $gold;
     outline-offset: 2px;
   }
 }
 
 .switchOn {
-  background: $text;
+  background: $ink;
 }
 
 .switchThumb {
   display: block;
   width: 20px;
   height: 20px;
-  background: $bg;
+  background: $cream;
   border-radius: 50%;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 
   .switchOn & {
     transform: translateX(20px);
   }
 }
 
-// =============================================================================
-// FORM LAYOUT
-// =============================================================================
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   max-width: 500px;
-  padding: 24px;
+  padding: 28px;
   border: 1px solid $border;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .formActions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  padding-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid $border;
   margin-top: 8px;
 }
-
-// =============================================================================
-// BUTTONS
-// =============================================================================
 
 %btn-base {
   display: inline-flex;
@@ -412,35 +393,35 @@ $success: #16a34a;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  font-family: inherit;
-  border-radius: 6px;
+  font-family: $font-ui;
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   border: 1px solid transparent;
 }
 
 .btnPrimary {
   @extend %btn-base;
-  background: $text;
-  color: $bg;
-  border-color: $text;
+  background: $ink;
+  color: $cream;
+  border-color: $ink;
 
   &:hover {
-    background: $text-secondary;
-    border-color: $text-secondary;
+    background: $ink-soft;
+    border-color: $ink-soft;
   }
 }
 
 .btnSecondary {
   @extend %btn-base;
-  background: $bg;
+  background: transparent;
   color: $text;
   border-color: $border;
 
   &:hover {
-    background: $bg-hover;
-    border-color: $text-muted;
+    background: $surface;
+    border-color: rgba(0, 0, 0, 0.16);
   }
 }

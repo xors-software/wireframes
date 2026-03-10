@@ -1,45 +1,57 @@
-$text: #0a0a0a;
-$text-secondary: #525252;
-$text-muted: #a3a3a3;
-$border: #e5e5e5;
-$bg: #ffffff;
-$bg-hover: #fafafa;
-$destructive: #dc2626;
-$destructive-hover: #b91c1c;
+$ink: #0A0A0A;
+$ink-soft: #1A1A1A;
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$gold: #C8A843;
+$text: #1A1A1A;
+$text-secondary: #6B6560;
+$text-muted: #9A9590;
+$border: rgba(0, 0, 0, 0.08);
+$surface: rgba(0, 0, 0, 0.04);
+$destructive: #C44;
+$destructive-hover: #A33;
+
+$font-body: 'Source Serif 4', Georgia, serif;
+$font-ui: 'Inter', -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
 
 .page {
   max-width: 800px;
 }
 
 .header {
-  margin-bottom: 48px;
-  padding-bottom: 24px;
+  margin-bottom: 56px;
+  padding-bottom: 28px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: $text-muted;
-  font-variant-numeric: tabular-nums;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  color: $gold;
+  letter-spacing: 0.06em;
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 8px 0;
+  font-family: $font-body;
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 10px 0;
+  color: $text;
 }
 
 .description {
-  font-size: 0.875rem;
+  font-family: $font-body;
+  font-size: 0.9375rem;
   color: $text-secondary;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .section {
-  margin-bottom: 32px;
-  padding-bottom: 32px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
   border-bottom: 1px solid $border;
 
   &:last-of-type {
@@ -48,42 +60,37 @@ $destructive-hover: #b91c1c;
 }
 
 .sectionTitle {
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-family: $font-ui;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: $text;
 }
 
 .sectionDescription {
+  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-
-// =============================================================================
-// TRIGGER BUTTON
-// =============================================================================
 
 .btn {
   padding: 10px 20px;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  font-family: inherit;
-  background: $text;
-  color: $bg;
-  border: 1px solid $text;
-  border-radius: 6px;
+  font-family: $font-ui;
+  background: $ink;
+  color: $cream;
+  border: 1px solid $ink;
+  border-radius: 0;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.2s ease;
 
   &:hover {
-    background: $text-secondary;
-    border-color: $text-secondary;
+    background: $ink-soft;
+    border-color: $ink-soft;
   }
 }
-
-// =============================================================================
-// OVERLAY
-// =============================================================================
 
 .overlay {
   position: fixed;
@@ -93,30 +100,21 @@ $destructive-hover: #b91c1c;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.15s ease;
+  animation: fadeIn 0.2s ease;
   padding: 24px;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-// =============================================================================
-// MODAL
-// =============================================================================
-
 .modal {
-  background: $bg;
-  border-radius: 12px;
+  background: $cream;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  animation: slideUp 0.2s ease;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+  animation: slideUp 0.25s ease;
 }
 
 .modalLarge {
@@ -128,7 +126,7 @@ $destructive-hover: #b91c1c;
   @extend .modal;
   max-width: 320px;
   text-align: center;
-  padding: 32px;
+  padding: 36px;
 }
 
 @keyframes slideUp {
@@ -151,8 +149,9 @@ $destructive-hover: #b91c1c;
 }
 
 .modalTitle {
+  font-family: $font-ui;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .closeBtn {
@@ -165,12 +164,10 @@ $destructive-hover: #b91c1c;
   color: $text-muted;
   background: none;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background: $bg-hover;
     color: $text;
   }
 }
@@ -179,9 +176,10 @@ $destructive-hover: #b91c1c;
   padding: 24px;
 
   p {
-    font-size: 0.875rem;
+    font-family: $font-body;
+    font-size: 0.9375rem;
     color: $text-secondary;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 }
 
@@ -193,31 +191,25 @@ $destructive-hover: #b91c1c;
   border-top: 1px solid $border;
 }
 
-// =============================================================================
-// ALERT MODAL
-// =============================================================================
-
 .alertIcon {
   font-size: 3rem;
   margin-bottom: 16px;
 }
 
 .alertTitle {
+  font-family: $font-ui;
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 8px;
 }
 
 .alertText {
-  font-size: 0.875rem;
+  font-family: $font-body;
+  font-size: 0.9375rem;
   color: $text-secondary;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 24px;
 }
-
-// =============================================================================
-// SIDE SHEET
-// =============================================================================
 
 .sheet {
   position: fixed;
@@ -225,21 +217,17 @@ $destructive-hover: #b91c1c;
   right: 0;
   bottom: 0;
   width: 100%;
-  max-width: 360px;
-  background: $bg;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+  max-width: 380px;
+  background: $cream;
+  box-shadow: -10px 0 48px rgba(0, 0, 0, 0.08);
   animation: slideIn 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 .sheetHeader {
@@ -263,14 +251,10 @@ $destructive-hover: #b91c1c;
   border-top: 1px solid $border;
 }
 
-// =============================================================================
-// FULL SCREEN MODAL
-// =============================================================================
-
 .fullScreen {
   position: fixed;
   inset: 0;
-  background: $bg;
+  background: $cream;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -296,22 +280,20 @@ $destructive-hover: #b91c1c;
   margin: 0 auto;
 
   h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family: $font-body;
+    font-size: 1.75rem;
+    font-weight: 300;
     margin-bottom: 16px;
   }
 
   p {
+    font-family: $font-body;
     font-size: 0.9375rem;
     color: $text-secondary;
-    line-height: 1.6;
+    line-height: 1.7;
     margin-bottom: 16px;
   }
 }
-
-// =============================================================================
-// BUTTONS
-// =============================================================================
 
 %btn-base {
   display: inline-flex;
@@ -319,43 +301,43 @@ $destructive-hover: #b91c1c;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  font-family: inherit;
-  border-radius: 6px;
+  font-family: $font-ui;
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   border: 1px solid transparent;
 }
 
 .btnPrimary {
   @extend %btn-base;
-  background: $text;
-  color: $bg;
-  border-color: $text;
+  background: $ink;
+  color: $cream;
+  border-color: $ink;
 
   &:hover {
-    background: $text-secondary;
-    border-color: $text-secondary;
+    background: $ink-soft;
+    border-color: $ink-soft;
   }
 }
 
 .btnSecondary {
   @extend %btn-base;
-  background: $bg;
+  background: transparent;
   color: $text;
   border-color: $border;
 
   &:hover {
-    background: $bg-hover;
-    border-color: $text-muted;
+    background: $surface;
+    border-color: rgba(0, 0, 0, 0.16);
   }
 }
 
 .btnDestructive {
   @extend %btn-base;
   background: $destructive;
-  color: $bg;
+  color: $cream;
   border-color: $destructive;
 
   &:hover {
@@ -363,10 +345,6 @@ $destructive-hover: #b91c1c;
     border-color: $destructive-hover;
   }
 }
-
-// =============================================================================
-// FORM ELEMENTS
-// =============================================================================
 
 .form {
   display: flex;
@@ -387,23 +365,24 @@ $destructive-hover: #b91c1c;
 }
 
 .label {
+  font-family: $font-ui;
   font-size: 0.8125rem;
   font-weight: 500;
   color: $text;
 }
 
 .input {
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 0.875rem;
-  font-family: inherit;
-  border: 1px solid $border;
-  border-radius: 6px;
-  background: $bg;
-  transition: border-color 0.15s ease;
+  font-family: $font-ui;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.5);
+  transition: border-color 0.2s ease;
 
   &:focus {
     outline: none;
-    border-color: $text;
+    border-color: $gold;
   }
 
   &::placeholder {
@@ -420,7 +399,7 @@ $destructive-hover: #b91c1c;
 .select {
   @extend .input;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -437,6 +416,7 @@ $destructive-hover: #b91c1c;
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 }
@@ -444,5 +424,5 @@ $destructive-hover: #b91c1c;
 .checkbox {
   width: 16px;
   height: 16px;
-  accent-color: $text;
+  accent-color: $ink;
 }

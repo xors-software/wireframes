@@ -1,25 +1,17 @@
 @use "sass:math";
 @use "sass:color";
 
-// =============================================================================
-// VARIABLES
-// =============================================================================
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$ink: #0A0A0A;
+$ink-light: #1A1A1A;
+$muted: #6B6560;
+$muted-light: #9A9590;
+$muted-lighter: #C8C4BE;
+$error: #C44;
+$gold: #C8A843;
 
-$cream: #FAF7F2;
-$cream-dark: #F0EBE3;
-$ink: #1a1a1a;
-$ink-light: #2a2a2a;
-$muted: #8a8580;
-$muted-light: #b5b0a8;
-$muted-lighter: #d0cbc3;
-$error: #c25550;
-$accent: #ff6b00;
-
-$font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
-
-// =============================================================================
-// CONTAINER
-// =============================================================================
+$font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
 .container {
   min-height: 100vh;
@@ -33,8 +25,8 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.03;
-  background-image: 
+  opacity: 0.02;
+  background-image:
     repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 24px),
     repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 24px);
 }
@@ -45,10 +37,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   padding: 24px;
   position: relative;
 }
-
-// =============================================================================
-// HEADER
-// =============================================================================
 
 .header {
   display: flex;
@@ -76,7 +64,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   width: 48px;
   height: 48px;
   background: $ink;
-  color: $accent;
+  color: $gold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,7 +86,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 }
 
 .balanceBox {
-  background: $accent;
+  background: $gold;
   color: $ink;
   padding: 8px 16px;
   height: 52px;
@@ -123,10 +111,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
 }
-
-// =============================================================================
-// GAME AREA
-// =============================================================================
 
 .gameArea {
   min-height: 500px;
@@ -198,10 +182,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   pointer-events: none;
 }
 
-// =============================================================================
-// RESULT DISPLAY
-// =============================================================================
-
 .resultDisplay {
   text-align: center;
   padding: 16px;
@@ -235,13 +215,13 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 }
 
 .resultBlackjack {
-  background: $accent;
+  background: $gold;
   color: $ink;
 }
 
 .resultWin {
   background: $ink;
-  color: $accent;
+  color: $gold;
 }
 
 .resultLose {
@@ -253,10 +233,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   background: $muted;
   color: $cream;
 }
-
-// =============================================================================
-// BETTING AREA
-// =============================================================================
 
 .bettingArea {
   margin-top: 24px;
@@ -307,15 +283,14 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   transition: all 0.15s ease;
 
   &:focus {
-    border-color: $accent;
-    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.2);
   }
 
   &::placeholder {
     color: $muted-light;
   }
 
-  // Hide number input spinners
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -353,10 +328,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   }
 }
 
-// =============================================================================
-// CONTROLS
-// =============================================================================
-
 .controls {
   margin-top: 24px;
 }
@@ -374,7 +345,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   gap: 2px;
 }
 
-// Shared button styles
 %btn-base {
   font-family: inherit;
   font-size: 14px;
@@ -400,7 +370,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   @extend %btn-base;
   width: 100%;
   background: $ink;
-  color: $accent;
+  color: $gold;
 
   &:disabled {
     background: $muted;
@@ -414,11 +384,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 
 .btnHit {
   @extend %btn-base;
-  background: $accent;
+  background: $gold;
   color: $ink;
 
   &:hover:not(:disabled) {
-    background: color.adjust($accent, $lightness: 5%);
+    background: color.adjust($gold, $lightness: 5%);
   }
 }
 
@@ -440,10 +410,6 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
     font-size: 14px;
   }
 }
-
-// =============================================================================
-// FOOTER
-// =============================================================================
 
 .footer {
   margin-top: 32px;

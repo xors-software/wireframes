@@ -1,26 +1,17 @@
 @use "sass:color";
 
-// =============================================================================
-// POLYMARKET GAME - SCSS STYLES
-// Matching the wireframes aesthetic (cream/orange/black)
-// =============================================================================
+$cream: #F5F2ED;
+$cream-dark: #E8E0D0;
+$ink: #0A0A0A;
+$ink-light: #1A1A1A;
+$muted: #6B6560;
+$muted-light: #9A9590;
+$muted-lighter: #C8C4BE;
+$error: #C44;
+$gold: #C8A843;
+$success: #4A8A5A;
 
-$cream: #FAF7F2;
-$cream-dark: #F0EBE3;
-$ink: #1a1a1a;
-$ink-light: #2a2a2a;
-$muted: #8a8580;
-$muted-light: #b5b0a8;
-$muted-lighter: #d0cbc3;
-$error: #c25550;
-$accent: #ff6b00;
-$success: #2d8a4e;
-
-$font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
-
-// =============================================================================
-// LAYOUT
-// =============================================================================
+$font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
 .container {
   min-height: 100vh;
@@ -34,15 +25,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.03;
-  background-image: 
+  opacity: 0.02;
+  background-image:
     repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 24px),
     repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 24px);
 }
-
-// =============================================================================
-// HEADER
-// =============================================================================
 
 .header {
   display: flex;
@@ -64,7 +51,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   width: 48px;
   height: 48px;
   background: $ink;
-  color: $accent;
+  color: $gold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,7 +80,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 }
 
 .balance {
-  background: $accent;
+  background: $gold;
   color: $ink;
   padding: 8px 16px;
   height: 52px;
@@ -119,19 +106,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 .main {
   max-width: 900px;
   margin: 0 auto;
   padding: 24px;
 }
-
-// =============================================================================
-// LOGIN SCREEN
-// =============================================================================
 
 .loginScreen {
   min-height: 100vh;
@@ -151,7 +130,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   width: 80px;
   height: 80px;
   background: $ink;
-  color: $accent;
+  color: $gold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,15 +180,15 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-family: inherit;
   font-size: 14px;
   box-sizing: border-box;
-  
+
   &::placeholder {
     color: $muted-light;
   }
-  
+
   &:focus {
     outline: none;
-    border-color: $accent;
-    box-shadow: 0 0 0 2px rgba($accent, 0.2);
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.2);
   }
 }
 
@@ -224,7 +203,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   width: 100%;
   height: 52px;
   background: $ink;
-  color: $accent;
+  color: $gold;
   border: 2px solid $ink;
   font-family: inherit;
   font-weight: 600;
@@ -232,11 +211,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   letter-spacing: 0.2em;
   cursor: pointer;
   transition: background 0.15s;
-  
+
   &:hover:not(:disabled) {
     background: $ink-light;
   }
-  
+
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -263,7 +242,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   align-items: center;
   justify-content: center;
   transition: all 0.15s;
-  
+
   &:hover {
     background: $error;
     border-color: $error;
@@ -271,15 +250,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   }
 }
 
-// =============================================================================
-// TOOLBAR
-// =============================================================================
-
 .toolbar {
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
-  
+
   @media (max-width: 600px) {
     flex-direction: column;
   }
@@ -311,15 +286,15 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-size: 12px;
   letter-spacing: 0.05em;
   transition: border-color 0.15s, box-shadow 0.15s;
-  
+
   &::placeholder {
     color: $muted-light;
   }
-  
+
   &:focus {
     outline: none;
-    border-color: $accent;
-    box-shadow: 0 0 0 2px rgba($accent, 0.2);
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.2);
   }
 }
 
@@ -327,7 +302,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   height: 44px;
   padding: 0 24px;
   background: $ink;
-  color: $accent;
+  color: $gold;
   font-family: inherit;
   font-weight: 600;
   font-size: 11px;
@@ -336,19 +311,15 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s;
-  
+
   &:hover {
     background: $ink-light;
   }
-  
+
   &:active {
     transform: scale(0.98);
   }
 }
-
-// =============================================================================
-// SECTIONS
-// =============================================================================
 
 .section {
   margin-bottom: 32px;
@@ -379,20 +350,16 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   letter-spacing: 0.1em;
 }
 
-// =============================================================================
-// MARKET CARD
-// =============================================================================
-
 .marketCard {
   background: $cream;
   border: 2px solid $ink;
   padding: 16px;
   transition: background 0.15s;
-  
+
   &:hover:not(.resolved) {
     background: $cream-dark;
   }
-  
+
   &.resolved {
     opacity: 0.6;
     background: $cream-dark;
@@ -422,7 +389,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   cursor: pointer;
   padding: 4px;
   transition: opacity 0.15s;
-  
+
   &:hover {
     opacity: 0.7;
   }
@@ -440,12 +407,12 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-weight: 600;
   padding: 4px 10px;
   letter-spacing: 0.1em;
-  
+
   &.yes {
-    background: $accent;
+    background: $gold;
     color: $ink;
   }
-  
+
   &.no {
     background: $error;
     color: $cream;
@@ -460,7 +427,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 
 .yesFill {
   height: 100%;
-  background: $accent;
+  background: $gold;
   transition: width 0.3s ease;
 }
 
@@ -492,26 +459,22 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 }
 
 .yesButton {
-  background: $accent;
+  background: $gold;
   color: $ink;
-  
+
   &:hover {
-    background: color.adjust($accent, $lightness: 5%);
+    background: color.adjust($gold, $lightness: 5%);
   }
 }
 
 .noButton {
   background: $cream;
   color: $ink;
-  
+
   &:hover {
     background: $cream-dark;
   }
 }
-
-// =============================================================================
-// MODALS
-// =============================================================================
 
 .modalOverlay {
   position: fixed;
@@ -545,7 +508,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   padding: 16px;
   border-bottom: 2px solid $ink;
   background: $cream-dark;
-  
+
   h2 {
     font-size: 13px;
     font-weight: 600;
@@ -564,7 +527,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   padding: 0;
   line-height: 1;
   transition: color 0.15s;
-  
+
   &:hover {
     color: $ink;
   }
@@ -601,13 +564,13 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   background: $cream-dark;
   color: $muted;
   border: 2px solid $muted-lighter;
-  
+
   &.activeYes {
-    background: $accent;
+    background: $gold;
     color: $ink;
     border-color: $ink;
   }
-  
+
   &.activeNo {
     background: $cream;
     color: $ink;
@@ -655,15 +618,15 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   font-size: 24px;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
-  
+
   &::placeholder {
     color: $muted-light;
   }
-  
+
   &:focus {
     outline: none;
-    border-color: $accent;
-    box-shadow: 0 0 0 2px rgba($accent, 0.2);
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.2);
   }
 
   &::-webkit-outer-spin-button,
@@ -681,7 +644,7 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
-  
+
   button {
     padding: 10px;
     background: $cream;
@@ -692,11 +655,11 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s;
-    
+
     &:hover:not(:disabled) {
       background: $cream-dark;
     }
-    
+
     &:disabled {
       opacity: 0.4;
       cursor: not-allowed;
@@ -722,14 +685,14 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   justify-content: space-between;
   font-size: 12px;
   padding: 4px 0;
-  
+
   span:first-child {
     color: $muted;
   }
 }
 
 .profit {
-  color: $accent;
+  color: $gold;
   font-weight: 600;
 }
 
@@ -747,33 +710,32 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   letter-spacing: 0.15em;
   cursor: pointer;
   transition: all 0.15s;
-  
+
   &:disabled {
     background: $muted-lighter;
     color: $muted;
     cursor: not-allowed;
   }
-  
+
   &.confirmYes:not(:disabled) {
     background: $ink;
-    color: $accent;
-    
+    color: $gold;
+
     &:hover {
       background: $ink-light;
     }
   }
-  
+
   &.confirmNo:not(:disabled) {
     background: $ink;
     color: $cream;
-    
+
     &:hover {
       background: $ink-light;
     }
   }
 }
 
-// Resolve modal specific
 .resolveQuestion {
   font-size: 14px;
   font-weight: 500;
@@ -798,15 +760,15 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   color: $ink;
   font-family: inherit;
   font-size: 13px;
-  
+
   &::placeholder {
     color: $muted-light;
   }
-  
+
   &:focus {
     outline: none;
-    border-color: $accent;
-    box-shadow: 0 0 0 2px rgba($accent, 0.2);
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.2);
   }
 }
 
@@ -834,25 +796,25 @@ $font-mono: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all 0.15s;
-  
+
   &:disabled {
     opacity: 0.5;
   }
 }
 
 .resolveYes {
-  background: $accent;
+  background: $gold;
   color: $ink;
-  
+
   &:hover:not(:disabled) {
-    background: color.adjust($accent, $lightness: 5%);
+    background: color.adjust($gold, $lightness: 5%);
   }
 }
 
 .resolveNo {
   background: $cream;
   color: $ink;
-  
+
   &:hover:not(:disabled) {
     background: $cream-dark;
   }
