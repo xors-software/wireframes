@@ -1,0 +1,39 @@
+---
+description: XORS brand identity and design system based on ARK Studio wireframes
+alwaysApply: true
+---
+
+# XORS Brand Identity
+
+Design system derived from ark.studio/xors wireframes.
+
+## Color Palette
+
+- **Stone** `#B5B5B5` — primary background
+- **Ink** `#0A0A0A` — dark sections, primary buttons, text
+- **Cream** `#F5F2ED` — content surfaces (examples, modals, forms)
+- **Gold** `#C8A843` — accent color (status badges, focus rings, highlights)
+- **Never use orange.** The old `#ff6b00` accent is deprecated.
+
+## Typography
+
+- **Body/prose**: `Source Serif 4` — editorial, literary tone
+- **UI/labels**: `Inter` — buttons, nav, form labels, section headings
+- **Code/mono**: `JetBrains Mono` — status badges, technical labels
+- All text is **lowercase** (`text-transform: lowercase` on `html`)
+
+## Layout Principles
+
+- **No border-radius** — all interactive elements are square (0px)
+- Generous whitespace — sections padded 100-120px vertically
+- Gray ↔ black section transitions for contrast
+- Pill-shaped footer (`border-radius: 999px`, ink bg, cream text)
+- Two-column legal pages: title pinned left, body flows right then single-column
+
+## Component Patterns
+
+- Cards: `rgba(255,255,255,0.15)` on stone, `rgba(255,255,255,0.03)` on ink
+- Section numbers in gold mono (`01`, `02`, `03`) with divider line
+- Status badges: mono font, 1px border, no fill
+- Focus rings use gold: `outline: 2px solid #C8A843`
+- Links underlined with `text-underline-offset: 3px`, gold on hover
