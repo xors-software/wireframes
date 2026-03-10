@@ -116,6 +116,30 @@ const games: Item[] = [
   },
 ]
 
+const legal: Item[] = [
+  {
+    id: 0,
+    label: 'acceptable use policy',
+    description: 'what you can and cannot do with xors services.',
+    href: '/legal/acceptable-use',
+    status: 'wip',
+  },
+  {
+    id: 1,
+    label: 'privacy policy',
+    description: 'how we collect, use, and protect your information.',
+    href: '/legal/privacy',
+    status: 'wip',
+  },
+  {
+    id: 2,
+    label: 'terms of service',
+    description: 'the agreement between you and xors software.',
+    href: '/legal/terms',
+    status: 'wip',
+  },
+]
+
 function ItemCard({ item }: { item: Item }) {
   return (
     <Link href={item.href || '#'} className={styles.card}>
@@ -194,6 +218,22 @@ export default function Home() {
         </div>
         <div className={styles.grid}>
           {games.map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))}
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.sectionDark}`}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionMeta}>
+            <span className={styles.sectionNumber}>04</span>
+            <span className={styles.sectionDivider} />
+          </div>
+          <h2 className={styles.sectionTitle}>legal</h2>
+          <p className={styles.sectionDescription}>policies and agreements.</p>
+        </div>
+        <div className={styles.grid}>
+          {legal.map((item) => (
             <ItemCard key={item.id} item={item} />
           ))}
         </div>
