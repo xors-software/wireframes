@@ -146,7 +146,7 @@ function CardMesh({ suit, rank, hidden, targetX, targetY, cardKey }: CardMeshPro
           <meshStandardMaterial color="#1a1a1a" />
         </RoundedBox>
         <RoundedBox args={[1.0, 1.6, 0.002]} radius={0.03} smoothness={2} position={[0, 0, 0.001]}>
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </RoundedBox>
         <Text position={[0, 0, 0.003]} fontSize={0.4} color="#1a1a1a" anchorX="center" anchorY="middle">
           ∞
@@ -200,7 +200,7 @@ function PreloadScene({ onReady }: { onReady?: () => void }) {
         <meshStandardMaterial color="#1a1a1a" />
       </RoundedBox>
       <RoundedBox args={[1.0, 1.6, 0.002]} radius={0.03} smoothness={2}>
-        <meshStandardMaterial color="#C8A843" />
+        <meshStandardMaterial color="#ff6b00" />
       </RoundedBox>
       {/* Preload text with both colors and all characters used */}
       <Text fontSize={0.26} color="#1a1a1a" anchorX="center" anchorY="middle">

@@ -68,11 +68,11 @@ function Coin({ isFlipping, result, onFlipComplete }: CoinProps) {
       <group position={[0, 0, 0.07]}>
         <mesh position={[0, 0.25, 0]}>
           <boxGeometry args={[0.6, 0.12, 0.01]} />
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </mesh>
         <mesh position={[0, -0.1, 0]}>
           <boxGeometry args={[0.12, 0.6, 0.01]} />
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </mesh>
       </group>
 
@@ -80,15 +80,15 @@ function Coin({ isFlipping, result, onFlipComplete }: CoinProps) {
       <group position={[0, 0, -0.07]} rotation={[0, Math.PI, 0]}>
         <mesh position={[-0.35, 0, 0]}>
           <boxGeometry args={[0.12, 0.7, 0.01]} />
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </mesh>
         <mesh position={[0.35, 0, 0]}>
           <boxGeometry args={[0.12, 0.7, 0.01]} />
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </mesh>
         <mesh position={[0, 0, 0]}>
           <boxGeometry args={[0.58, 0.12, 0.01]} />
-          <meshStandardMaterial color="#C8A843" />
+          <meshStandardMaterial color="#ff6b00" />
         </mesh>
       </group>
     </group>

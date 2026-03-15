@@ -1,72 +1,61 @@
-$ink: #0A0A0A;
-$ink-soft: #1A1A1A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$text: #1A1A1A;
-$text-secondary: #6B6560;
-$text-muted: #9A9590;
-$border: rgba(0, 0, 0, 0.08);
-$surface: rgba(0, 0, 0, 0.04);
-$error: #C44;
-$success: #4A8A5A;
-
-$font-body: 'Source Serif 4', Georgia, serif;
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$error: #dc2626;
+$success: #16a34a;
 
 .page {
   max-width: 800px;
 }
 
 .header {
-  margin-bottom: 56px;
-  padding-bottom: 28px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: $gold;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-family: $font-body;
-  font-size: 1.75rem;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 10px 0;
-  color: $text;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
 }
 
 .description {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .sectionTitle {
-  font-family: $font-ui;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: $text;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .sectionDescription {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
+
+// =============================================================================
+// FORM GRID
+// =============================================================================
 
 .formGrid {
   display: grid;
@@ -94,8 +83,11 @@ $font-mono: 'JetBrains Mono', monospace;
   gap: 6px;
 }
 
+// =============================================================================
+// LABELS
+// =============================================================================
+
 .label {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   font-weight: 500;
   color: $text;
@@ -110,26 +102,28 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .helpText {
-  font-family: $font-ui;
   font-size: 0.75rem;
   color: $text-muted;
 }
 
 .errorText {
-  font-family: $font-ui;
   font-size: 0.75rem;
   color: $error;
 }
 
+// =============================================================================
+// TEXT INPUT
+// =============================================================================
+
 .input {
-  padding: 10px 14px;
+  padding: 10px 12px;
   font-size: 0.875rem;
-  font-family: $font-ui;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 0;
-  background: rgba(255, 255, 255, 0.5);
+  font-family: inherit;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg;
   color: $text;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
   &::placeholder {
     color: $text-muted;
@@ -137,18 +131,18 @@ $font-mono: 'JetBrains Mono', monospace;
 
   &:focus {
     outline: none;
-    border-color: $gold;
-    box-shadow: 0 0 0 3px rgba($gold, 0.12);
+    border-color: $text;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
   }
 
   &:disabled {
-    background: $surface;
+    background: $bg-hover;
     color: $text-muted;
     cursor: not-allowed;
   }
 
   &:read-only {
-    background: $surface;
+    background: $bg-hover;
   }
 }
 
@@ -157,7 +151,7 @@ $font-mono: 'JetBrains Mono', monospace;
 
   &:focus {
     border-color: $success;
-    box-shadow: 0 0 0 3px rgba($success, 0.12);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
   }
 }
 
@@ -166,9 +160,13 @@ $font-mono: 'JetBrains Mono', monospace;
 
   &:focus {
     border-color: $error;
-    box-shadow: 0 0 0 3px rgba($error, 0.12);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
   }
 }
+
+// =============================================================================
+// TEXTAREA
+// =============================================================================
 
 .textarea {
   @extend .input;
@@ -176,10 +174,14 @@ $font-mono: 'JetBrains Mono', monospace;
   min-height: 80px;
 }
 
+// =============================================================================
+// SELECT
+// =============================================================================
+
 .select {
   @extend .input;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -189,6 +191,10 @@ $font-mono: 'JetBrains Mono', monospace;
     cursor: not-allowed;
   }
 }
+
+// =============================================================================
+// CHECKBOX
+// =============================================================================
 
 .checkboxGroup {
   display: flex;
@@ -200,12 +206,11 @@ $font-mono: 'JetBrains Mono', monospace;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 
   &.disabled {
-    opacity: 0.4;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }
@@ -216,8 +221,8 @@ $font-mono: 'JetBrains Mono', monospace;
   pointer-events: none;
 
   &:checked + .checkboxCustom {
-    background: $ink;
-    border-color: $ink;
+    background: $text;
+    border-color: $text;
 
     &::after {
       opacity: 1;
@@ -225,18 +230,18 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 
   &:focus + .checkboxCustom {
-    box-shadow: 0 0 0 3px rgba($gold, 0.2);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
   }
 }
 
 .checkboxCustom {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0;
-  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid $border;
+  border-radius: 4px;
+  background: $bg;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 
   &::after {
@@ -246,13 +251,17 @@ $font-mono: 'JetBrains Mono', monospace;
     top: 2px;
     width: 4px;
     height: 8px;
-    border: solid $cream;
+    border: solid $bg;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     opacity: 0;
     transition: opacity 0.15s ease;
   }
 }
+
+// =============================================================================
+// RADIO
+// =============================================================================
 
 .radioGroup {
   display: flex;
@@ -264,7 +273,6 @@ $font-mono: 'JetBrains Mono', monospace;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 }
@@ -275,7 +283,7 @@ $font-mono: 'JetBrains Mono', monospace;
   pointer-events: none;
 
   &:checked + .radioCustom {
-    border-color: $ink;
+    border-color: $text;
 
     &::after {
       opacity: 1;
@@ -284,31 +292,35 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 
   &:focus + .radioCustom {
-    box-shadow: 0 0 0 3px rgba($gold, 0.2);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
   }
 }
 
 .radioCustom {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 2px solid $border;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: $bg;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 
   &::after {
     content: '';
     position: absolute;
     inset: 3px;
-    background: $ink;
+    background: $text;
     border-radius: 50%;
     opacity: 0;
     transform: scale(0);
     transition: all 0.15s ease;
   }
 }
+
+// =============================================================================
+// TOGGLE SWITCH
+// =============================================================================
 
 .switchGroup {
   display: flex;
@@ -320,12 +332,11 @@ $font-mono: 'JetBrains Mono', monospace;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: $font-ui;
   font-size: 0.875rem;
   max-width: 300px;
 
   &.disabled {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 
@@ -335,7 +346,7 @@ $font-mono: 'JetBrains Mono', monospace;
   padding: 2px;
   border: none;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.12);
+  background: $border;
   cursor: pointer;
   transition: background 0.2s ease;
   position: relative;
@@ -345,47 +356,55 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 
   &:focus-visible {
-    outline: 2px solid $gold;
+    outline: 2px solid $text;
     outline-offset: 2px;
   }
 }
 
 .switchOn {
-  background: $ink;
+  background: $text;
 }
 
 .switchThumb {
   display: block;
   width: 20px;
   height: 20px;
-  background: $cream;
+  background: $bg;
   border-radius: 50%;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
   .switchOn & {
     transform: translateX(20px);
   }
 }
 
+// =============================================================================
+// FORM LAYOUT
+// =============================================================================
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   max-width: 500px;
-  padding: 28px;
+  padding: 24px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
 }
 
 .formActions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  padding-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid $border;
   margin-top: 8px;
 }
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
 
 %btn-base {
   display: inline-flex;
@@ -393,35 +412,35 @@ $font-mono: 'JetBrains Mono', monospace;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  font-family: $font-ui;
-  border-radius: 0;
+  font-family: inherit;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: 1px solid transparent;
 }
 
 .btnPrimary {
   @extend %btn-base;
-  background: $ink;
-  color: $cream;
-  border-color: $ink;
+  background: $text;
+  color: $bg;
+  border-color: $text;
 
   &:hover {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 }
 
 .btnSecondary {
   @extend %btn-base;
-  background: transparent;
+  background: $bg;
   color: $text;
   border-color: $border;
 
   &:hover {
-    background: $surface;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 }

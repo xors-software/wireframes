@@ -1,30 +1,22 @@
-$ink: #0A0A0A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$text-on-cream: #1A1A1A;
-$text-muted-on-cream: #6B6560;
-$border-on-cream: rgba(0, 0, 0, 0.08);
-
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
 
 .layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: $cream;
 }
 
 .nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba($cream, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid $border-on-cream;
-  padding: 14px 32px;
+  background: $bg;
+  border-bottom: 1px solid $border;
+  padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,15 +24,13 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .backLink {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: $text-on-cream;
-  transition: color 0.2s ease;
-  letter-spacing: 0.02em;
+  color: $text;
+  transition: color 0.15s ease;
 
   &:hover {
-    color: $gold;
+    color: $text-secondary;
   }
 }
 
@@ -50,43 +40,19 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .navLink {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  color: $text-muted-on-cream;
-  letter-spacing: 0.04em;
-  transition: color 0.2s ease;
-  padding: 4px 0;
-  position: relative;
+  font-size: 0.75rem;
+  color: $text-muted;
+  transition: color 0.15s ease;
 
   &:hover {
-    color: $text-on-cream;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: $gold;
-    transform: scaleX(0);
-    transition: transform 0.2s ease;
-  }
-
-  &:hover::after {
-    transform: scaleX(1);
+    color: $text;
   }
 }
 
 .main {
   flex: 1;
-  padding: 56px 32px;
-  max-width: 960px;
+  padding: 48px 24px;
+  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-
-  @media (min-width: 768px) {
-    padding: 64px 48px;
-  }
 }

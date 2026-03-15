@@ -1,57 +1,45 @@
-$ink: #0A0A0A;
-$ink-soft: #1A1A1A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$text: #1A1A1A;
-$text-secondary: #6B6560;
-$text-muted: #9A9590;
-$border: rgba(0, 0, 0, 0.08);
-$surface: rgba(0, 0, 0, 0.04);
-$destructive: #C44;
-$destructive-hover: #A33;
-
-$font-body: 'Source Serif 4', Georgia, serif;
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$destructive: #dc2626;
+$destructive-hover: #b91c1c;
 
 .page {
   max-width: 800px;
 }
 
 .header {
-  margin-bottom: 56px;
-  padding-bottom: 28px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: $gold;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-family: $font-body;
-  font-size: 1.75rem;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 10px 0;
-  color: $text;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
 }
 
 .description {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 40px;
-  padding-bottom: 40px;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
   border-bottom: 1px solid $border;
 
   &:last-of-type {
@@ -60,37 +48,42 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .sectionTitle {
-  font-family: $font-ui;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: $text;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .sectionDescription {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
+
+// =============================================================================
+// TRIGGER BUTTON
+// =============================================================================
 
 .btn {
   padding: 10px 20px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  font-family: $font-ui;
-  background: $ink;
-  color: $cream;
-  border: 1px solid $ink;
-  border-radius: 0;
+  font-family: inherit;
+  background: $text;
+  color: $bg;
+  border: 1px solid $text;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
 
   &:hover {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 }
+
+// =============================================================================
+// OVERLAY
+// =============================================================================
 
 .overlay {
   position: fixed;
@@ -100,21 +93,30 @@ $font-mono: 'JetBrains Mono', monospace;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 0.15s ease;
   padding: 24px;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
+// =============================================================================
+// MODAL
+// =============================================================================
+
 .modal {
-  background: $cream;
+  background: $bg;
+  border-radius: 12px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-  animation: slideUp 0.25s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.2s ease;
 }
 
 .modalLarge {
@@ -126,7 +128,7 @@ $font-mono: 'JetBrains Mono', monospace;
   @extend .modal;
   max-width: 320px;
   text-align: center;
-  padding: 36px;
+  padding: 32px;
 }
 
 @keyframes slideUp {
@@ -149,9 +151,8 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .modalTitle {
-  font-family: $font-ui;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .closeBtn {
@@ -164,10 +165,12 @@ $font-mono: 'JetBrains Mono', monospace;
   color: $text-muted;
   background: none;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 
   &:hover {
+    background: $bg-hover;
     color: $text;
   }
 }
@@ -176,10 +179,9 @@ $font-mono: 'JetBrains Mono', monospace;
   padding: 24px;
 
   p {
-    font-family: $font-body;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: $text-secondary;
-    line-height: 1.7;
+    line-height: 1.6;
   }
 }
 
@@ -191,25 +193,31 @@ $font-mono: 'JetBrains Mono', monospace;
   border-top: 1px solid $border;
 }
 
+// =============================================================================
+// ALERT MODAL
+// =============================================================================
+
 .alertIcon {
   font-size: 3rem;
   margin-bottom: 16px;
 }
 
 .alertTitle {
-  font-family: $font-ui;
   font-size: 1.125rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
 .alertText {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.6;
+  line-height: 1.5;
   margin-bottom: 24px;
 }
+
+// =============================================================================
+// SIDE SHEET
+// =============================================================================
 
 .sheet {
   position: fixed;
@@ -217,17 +225,21 @@ $font-mono: 'JetBrains Mono', monospace;
   right: 0;
   bottom: 0;
   width: 100%;
-  max-width: 380px;
-  background: $cream;
-  box-shadow: -10px 0 48px rgba(0, 0, 0, 0.08);
+  max-width: 360px;
+  background: $bg;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .sheetHeader {
@@ -251,10 +263,14 @@ $font-mono: 'JetBrains Mono', monospace;
   border-top: 1px solid $border;
 }
 
+// =============================================================================
+// FULL SCREEN MODAL
+// =============================================================================
+
 .fullScreen {
   position: fixed;
   inset: 0;
-  background: $cream;
+  background: $bg;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -280,20 +296,22 @@ $font-mono: 'JetBrains Mono', monospace;
   margin: 0 auto;
 
   h2 {
-    font-family: $font-body;
-    font-size: 1.75rem;
-    font-weight: 300;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin-bottom: 16px;
   }
 
   p {
-    font-family: $font-body;
     font-size: 0.9375rem;
     color: $text-secondary;
-    line-height: 1.7;
+    line-height: 1.6;
     margin-bottom: 16px;
   }
 }
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
 
 %btn-base {
   display: inline-flex;
@@ -301,43 +319,43 @@ $font-mono: 'JetBrains Mono', monospace;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  font-family: $font-ui;
-  border-radius: 0;
+  font-family: inherit;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: 1px solid transparent;
 }
 
 .btnPrimary {
   @extend %btn-base;
-  background: $ink;
-  color: $cream;
-  border-color: $ink;
+  background: $text;
+  color: $bg;
+  border-color: $text;
 
   &:hover {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 }
 
 .btnSecondary {
   @extend %btn-base;
-  background: transparent;
+  background: $bg;
   color: $text;
   border-color: $border;
 
   &:hover {
-    background: $surface;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 }
 
 .btnDestructive {
   @extend %btn-base;
   background: $destructive;
-  color: $cream;
+  color: $bg;
   border-color: $destructive;
 
   &:hover {
@@ -345,6 +363,10 @@ $font-mono: 'JetBrains Mono', monospace;
     border-color: $destructive-hover;
   }
 }
+
+// =============================================================================
+// FORM ELEMENTS
+// =============================================================================
 
 .form {
   display: flex;
@@ -365,24 +387,23 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .label {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   font-weight: 500;
   color: $text;
 }
 
 .input {
-  padding: 10px 14px;
+  padding: 10px 12px;
   font-size: 0.875rem;
-  font-family: $font-ui;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 0;
-  background: rgba(255, 255, 255, 0.5);
-  transition: border-color 0.2s ease;
+  font-family: inherit;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg;
+  transition: border-color 0.15s ease;
 
   &:focus {
     outline: none;
-    border-color: $gold;
+    border-color: $text;
   }
 
   &::placeholder {
@@ -399,7 +420,7 @@ $font-mono: 'JetBrains Mono', monospace;
 .select {
   @extend .input;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23525252' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -416,7 +437,6 @@ $font-mono: 'JetBrains Mono', monospace;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: $font-ui;
   font-size: 0.875rem;
   cursor: pointer;
 }
@@ -424,5 +444,5 @@ $font-mono: 'JetBrains Mono', monospace;
 .checkbox {
   width: 16px;
   height: 16px;
-  accent-color: $ink;
+  accent-color: $text;
 }

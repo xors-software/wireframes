@@ -99,13 +99,13 @@ export default function CoinflipGame() {
       <style jsx>{`
         .container {
           min-height: 100vh;
-          background: #F5F2ED;
+          background: #faf7f2;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           position: relative;
-          font-family: "JetBrains Mono", "SF Mono", monospace;
+          font-family: "SF Mono", "Monaco", "Inconsolata", monospace;
         }
 
         .mode-toggle {
@@ -129,7 +129,7 @@ export default function CoinflipGame() {
           font-size: 14px;
           font-weight: 600;
           letter-spacing: 0.3em;
-          color: #0A0A0A;
+          color: #1a1a1a;
           margin-top: 24px;
         }
       `}</style>

@@ -1,72 +1,56 @@
-$ink: #0A0A0A;
-$ink-soft: #1A1A1A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$gold-dim: #A08A38;
-$text: #1A1A1A;
-$text-secondary: #6B6560;
-$text-muted: #9A9590;
-$border: rgba(0, 0, 0, 0.08);
-$destructive: #C44;
-$destructive-hover: #A33;
-$surface: rgba(0, 0, 0, 0.04);
-
-$font-body: 'Source Serif 4', Georgia, serif;
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$destructive: #dc2626;
+$destructive-hover: #b91c1c;
 
 .page {
   max-width: 800px;
 }
 
 .header {
-  margin-bottom: 56px;
-  padding-bottom: 28px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: $gold;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-family: $font-body;
-  font-size: 1.75rem;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 10px 0;
-  color: $text;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
 }
 
 .description {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .sectionTitle {
-  font-family: $font-ui;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: $text;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .sectionDescription {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .buttonRow {
@@ -76,41 +60,48 @@ $font-mono: 'JetBrains Mono', monospace;
   align-items: center;
 }
 
+// =============================================================================
+// BASE BUTTON STYLES
+// =============================================================================
+
 %btn-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  font-family: $font-ui;
-  border-radius: 0;
+  font-family: inherit;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: 1px solid transparent;
-  letter-spacing: 0.02em;
 
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 
   &:focus-visible {
-    outline: 2px solid $gold;
+    outline: 2px solid $text;
     outline-offset: 2px;
   }
 }
 
+// =============================================================================
+// BUTTON VARIANTS
+// =============================================================================
+
 .btnPrimary {
   @extend %btn-base;
-  background: $ink;
-  color: $cream;
-  border-color: $ink;
+  background: $text;
+  color: $bg;
+  border-color: $text;
 
   &:hover:not(:disabled) {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 
   &:active:not(:disabled) {
@@ -120,13 +111,13 @@ $font-mono: 'JetBrains Mono', monospace;
 
 .btnSecondary {
   @extend %btn-base;
-  background: transparent;
+  background: $bg;
   color: $text;
   border-color: $border;
 
   &:hover:not(:disabled) {
-    background: $surface;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 
   &:active:not(:disabled) {
@@ -141,7 +132,7 @@ $font-mono: 'JetBrains Mono', monospace;
   border-color: transparent;
 
   &:hover:not(:disabled) {
-    background: $surface;
+    background: $bg-hover;
   }
 
   &:active:not(:disabled) {
@@ -152,7 +143,7 @@ $font-mono: 'JetBrains Mono', monospace;
 .btnDestructive {
   @extend %btn-base;
   background: $destructive;
-  color: $cream;
+  color: $bg;
   border-color: $destructive;
 
   &:hover:not(:disabled) {
@@ -165,19 +156,27 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 }
 
+// =============================================================================
+// BUTTON SIZES
+// =============================================================================
+
 .btnSmall {
-  padding: 6px 14px;
+  padding: 6px 12px;
   font-size: 0.75rem;
 }
 
 .btnLarge {
   padding: 14px 28px;
-  font-size: 0.9375rem;
+  font-size: 1rem;
 }
 
 .btnFull {
   width: 100%;
 }
+
+// =============================================================================
+// BUTTON WITH ICONS
+// =============================================================================
 
 .btnIcon {
   font-size: 1em;
@@ -186,7 +185,7 @@ $font-mono: 'JetBrains Mono', monospace;
 
 .btnIconOnly {
   @extend %btn-base;
-  background: transparent;
+  background: $bg;
   color: $text;
   border-color: $border;
   padding: 10px;
@@ -195,13 +194,18 @@ $font-mono: 'JetBrains Mono', monospace;
   font-size: 1rem;
 
   &:hover:not(:disabled) {
-    background: $surface;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 }
 
+// =============================================================================
+// BUTTON GROUPS
+// =============================================================================
+
 .buttonGroup {
   display: inline-flex;
+  border-radius: 6px;
   overflow: hidden;
   border: 1px solid $border;
 }
@@ -211,7 +215,7 @@ $font-mono: 'JetBrains Mono', monospace;
   border-radius: 0;
   border: none;
   border-right: 1px solid $border;
-  background: transparent;
+  background: $bg;
   color: $text;
 
   &:last-child {
@@ -219,9 +223,13 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 
   &:hover:not(:disabled) {
-    background: $surface;
+    background: $bg-hover;
   }
 }
+
+// =============================================================================
+// LOADING STATE
+// =============================================================================
 
 .btnLoading {
   position: relative;
@@ -241,6 +249,10 @@ $font-mono: 'JetBrains Mono', monospace;
     transform: rotate(360deg);
   }
 }
+
+// =============================================================================
+// FULL WIDTH CONTAINER
+// =============================================================================
 
 .fullWidthContainer {
   display: flex;

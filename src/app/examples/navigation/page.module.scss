@@ -1,87 +1,80 @@
-$ink: #0A0A0A;
-$ink-soft: #1A1A1A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$text: #1A1A1A;
-$text-secondary: #6B6560;
-$text-muted: #9A9590;
-$border: rgba(0, 0, 0, 0.08);
-$surface: rgba(0, 0, 0, 0.04);
-
-$font-body: 'Source Serif 4', Georgia, serif;
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$bg-dark: #0a0a0a;
 
 .page {
   max-width: 900px;
 }
 
 .header {
-  margin-bottom: 56px;
-  padding-bottom: 28px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: $gold;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-family: $font-body;
-  font-size: 1.75rem;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 10px 0;
-  color: $text;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
 }
 
 .description {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .sectionTitle {
-  font-family: $font-ui;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: $text;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .sectionDescription {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
+
+// =============================================================================
+// PREVIEW CONTAINERS
+// =============================================================================
 
 .preview {
   border: 1px solid $border;
+  border-radius: 8px;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.3);
+  background: $bg;
 }
 
 .previewMobile {
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   max-width: 320px;
   overflow: hidden;
 }
 
 .previewSidebar {
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   display: flex;
   height: 300px;
   overflow: hidden;
@@ -89,9 +82,14 @@ $font-mono: 'JetBrains Mono', monospace;
 
 .previewFooter {
   border: 1px solid $border;
-  background: $surface;
+  border-radius: 8px;
+  background: $bg-hover;
   padding: 32px;
 }
+
+// =============================================================================
+// SIMPLE NAV
+// =============================================================================
 
 .navSimple {
   display: flex;
@@ -100,7 +98,6 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .navLogo {
-  font-family: $font-ui;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -111,16 +108,19 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .navLink {
-  font-family: $font-ui;
   font-size: 0.875rem;
   color: $text-secondary;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.15s ease;
 
   &:hover {
     color: $text;
   }
 }
+
+// =============================================================================
+// NAV WITH CTA
+// =============================================================================
 
 .navWithCta {
   display: flex;
@@ -140,7 +140,6 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .navLinkSecondary {
-  font-family: $font-ui;
   font-size: 0.875rem;
   color: $text-secondary;
   text-decoration: none;
@@ -152,20 +151,24 @@ $font-mono: 'JetBrains Mono', monospace;
 
 .btnPrimary {
   padding: 8px 16px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  font-family: $font-ui;
-  background: $ink;
-  color: $cream;
+  font-family: inherit;
+  background: $text;
+  color: $bg;
   border: none;
-  border-radius: 0;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
 
   &:hover {
-    background: $ink-soft;
+    background: $text-secondary;
   }
 }
+
+// =============================================================================
+// NAV WITH DROPDOWN
+// =============================================================================
 
 .navWithDropdown {
   display: flex;
@@ -185,7 +188,7 @@ $font-mono: 'JetBrains Mono', monospace;
   color: $text-secondary;
   background: none;
   border: none;
-  font-family: $font-ui;
+  font-family: inherit;
   cursor: pointer;
   padding: 0;
 
@@ -203,25 +206,26 @@ $font-mono: 'JetBrains Mono', monospace;
   top: 100%;
   left: 0;
   margin-top: 8px;
-  min-width: 180px;
-  background: $cream;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  min-width: 160px;
+  background: $bg;
+  border: 1px solid $border;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 4px;
   z-index: 10;
 }
 
 .dropdownItem {
   display: block;
-  padding: 10px 14px;
-  font-family: $font-ui;
+  padding: 8px 12px;
   font-size: 0.8125rem;
   color: $text;
   text-decoration: none;
+  border-radius: 4px;
   transition: background 0.15s ease;
 
   &:hover {
-    background: $surface;
+    background: $bg-hover;
   }
 }
 
@@ -230,6 +234,10 @@ $font-mono: 'JetBrains Mono', monospace;
   background: $border;
   margin: 4px 0;
 }
+
+// =============================================================================
+// MOBILE NAV
+// =============================================================================
 
 .navMobile {
   display: flex;
@@ -278,7 +286,6 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .mobileLink {
-  font-family: $font-ui;
   padding: 12px 0;
   font-size: 0.9375rem;
   color: $text;
@@ -290,9 +297,13 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 
   &:hover {
-    color: $gold;
+    color: $text-secondary;
   }
 }
+
+// =============================================================================
+// BREADCRUMBS
+// =============================================================================
 
 .breadcrumbs {
   display: flex;
@@ -302,13 +313,13 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .breadcrumbLink {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
 
   &:hover {
-    color: $gold;
+    color: $text;
+    text-decoration: underline;
   }
 }
 
@@ -318,28 +329,32 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .breadcrumbCurrent {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text;
   font-weight: 500;
 }
 
+// =============================================================================
+// TABS
+// =============================================================================
+
 .tabs {
   display: flex;
   gap: 4px;
   border-bottom: 1px solid $border;
+  padding-bottom: -1px;
 }
 
 .tab {
   padding: 10px 16px;
-  font-size: 0.8125rem;
-  font-family: $font-ui;
+  font-size: 0.875rem;
+  font-family: inherit;
   color: $text-secondary;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   margin-bottom: -1px;
 
   &:hover {
@@ -349,14 +364,18 @@ $font-mono: 'JetBrains Mono', monospace;
 
 .tabActive {
   color: $text;
-  border-bottom-color: $gold;
+  border-bottom-color: $text;
 }
+
+// =============================================================================
+// SIDEBAR
+// =============================================================================
 
 .sidebar {
   width: 200px;
   flex-shrink: 0;
   border-right: 1px solid $border;
-  background: $surface;
+  background: $bg-hover;
   display: flex;
   flex-direction: column;
 }
@@ -367,7 +386,6 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .sidebarLogo {
-  font-family: $font-ui;
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -385,20 +403,20 @@ $font-mono: 'JetBrains Mono', monospace;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
-  transition: all 0.2s ease;
+  border-radius: 6px;
+  transition: all 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: $bg;
     color: $text;
   }
 }
 
 .sidebarLinkActive {
-  background: rgba(255, 255, 255, 0.5);
+  background: $bg;
   color: $text;
   font-weight: 500;
 }
@@ -422,9 +440,12 @@ $font-mono: 'JetBrains Mono', monospace;
   align-items: center;
   justify-content: center;
   color: $text-muted;
-  font-family: $font-ui;
   font-size: 0.875rem;
 }
+
+// =============================================================================
+// PAGINATION
+// =============================================================================
 
 .pagination {
   display: flex;
@@ -437,33 +458,33 @@ $font-mono: 'JetBrains Mono', monospace;
   height: 36px;
   padding: 0 8px;
   font-size: 0.875rem;
-  font-family: $font-ui;
+  font-family: inherit;
   color: $text;
-  background: rgba(255, 255, 255, 0.3);
+  background: $bg;
   border: 1px solid $border;
-  border-radius: 0;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 }
 
 .pageBtnActive {
-  background: $ink;
-  color: $cream;
-  border-color: $ink;
+  background: $text;
+  color: $bg;
+  border-color: $text;
 
   &:hover {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 }
 
 .pageBtnDisabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -472,6 +493,10 @@ $font-mono: 'JetBrains Mono', monospace;
   color: $text-muted;
   font-size: 0.875rem;
 }
+
+// =============================================================================
+// FOOTER
+// =============================================================================
 
 .footer {
   display: grid;
@@ -490,22 +515,21 @@ $font-mono: 'JetBrains Mono', monospace;
 }
 
 .footerHeading {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: $text;
   margin-bottom: 4px;
 }
 
 .footerLink {
-  font-family: $font-ui;
   font-size: 0.8125rem;
   color: $text-secondary;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.15s ease;
 
   &:hover {
-    color: $gold;
+    color: $text;
   }
 }

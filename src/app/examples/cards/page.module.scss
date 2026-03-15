@@ -1,77 +1,66 @@
-$ink: #0A0A0A;
-$ink-soft: #1A1A1A;
-$cream: #F5F2ED;
-$cream-dark: #E8E0D0;
-$gold: #C8A843;
-$text: #1A1A1A;
-$text-secondary: #6B6560;
-$text-muted: #9A9590;
-$border: rgba(0, 0, 0, 0.08);
-$surface: rgba(0, 0, 0, 0.04);
-$success: #4A8A5A;
-$error: #C44;
-
-$font-body: 'Source Serif 4', Georgia, serif;
-$font-ui: 'Inter', -apple-system, sans-serif;
-$font-mono: 'JetBrains Mono', monospace;
+$text: #0a0a0a;
+$text-secondary: #525252;
+$text-muted: #a3a3a3;
+$border: #e5e5e5;
+$bg: #ffffff;
+$bg-hover: #fafafa;
+$success: #16a34a;
+$error: #dc2626;
 
 .page {
   max-width: 900px;
 }
 
 .header {
-  margin-bottom: 56px;
-  padding-bottom: 28px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
   border-bottom: 1px solid $border;
 }
 
 .code {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: $gold;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: $text-muted;
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-family: $font-body;
-  font-size: 1.75rem;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 10px 0;
-  color: $text;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0;
 }
 
 .description {
-  font-family: $font-body;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: $text-secondary;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .sectionTitle {
-  font-family: $font-ui;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: $text;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .sectionDescription {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
+
+// =============================================================================
+// CARD GRIDS
+// =============================================================================
 
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px;
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
@@ -101,48 +90,54 @@ $font-mono: 'JetBrains Mono', monospace;
 .featureGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 20px;
 
   @media (max-width: 700px) {
     grid-template-columns: 1fr;
   }
 }
 
+// =============================================================================
+// BASIC CARD
+// =============================================================================
+
 .card {
   padding: 24px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
 }
 
 .cardTitle {
-  font-family: $font-ui;
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 8px;
-  color: $text;
 }
 
 .cardText {
-  font-family: $font-body;
   font-size: 0.8125rem;
   color: $text-secondary;
-  line-height: 1.6;
+  line-height: 1.5;
 }
+
+// =============================================================================
+// INTERACTIVE CARD
+// =============================================================================
 
 .cardInteractive {
   display: block;
   padding: 24px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   text-decoration: none;
   color: inherit;
   position: relative;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(0, 0, 0, 0.16);
-    transform: translateY(-2px);
+    border-color: $text-muted;
+    background: $bg-hover;
 
     .cardArrow {
       opacity: 1;
@@ -156,43 +151,52 @@ $font-mono: 'JetBrains Mono', monospace;
   top: 24px;
   right: 24px;
   font-size: 1rem;
-  color: $gold;
+  color: $text-muted;
   opacity: 0;
   transform: translateX(-4px);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
+
+// =============================================================================
+// MEDIA CARD
+// =============================================================================
 
 .cardMedia {
   border: 1px solid $border;
+  border-radius: 8px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.3);
+  background: $bg;
 }
 
 .cardImage {
   aspect-ratio: 16 / 9;
-  background: $surface;
+  background: $bg-hover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .imagePlaceholder {
-  font-family: $font-mono;
   font-size: 0.75rem;
   color: $text-muted;
-  letter-spacing: 0.06em;
+  font-weight: 500;
 }
 
 .cardBody {
   padding: 20px;
 }
 
+// =============================================================================
+// HORIZONTAL CARD
+// =============================================================================
+
 .cardHorizontal {
   display: flex;
   gap: 16px;
   padding: 16px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   align-items: center;
 }
 
@@ -200,7 +204,8 @@ $font-mono: 'JetBrains Mono', monospace;
   width: 64px;
   height: 64px;
   flex-shrink: 0;
-  background: $surface;
+  background: $bg-hover;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,9 +216,14 @@ $font-mono: 'JetBrains Mono', monospace;
   min-width: 0;
 }
 
+// =============================================================================
+// CARD WITH ACTIONS
+// =============================================================================
+
 .cardWithActions {
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   display: flex;
   flex-direction: column;
 
@@ -230,34 +240,36 @@ $font-mono: 'JetBrains Mono', monospace;
   justify-content: flex-end;
 }
 
+// =============================================================================
+// STATS CARD
+// =============================================================================
+
 .cardStats {
   padding: 20px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 .statsLabel {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: $text-muted;
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .statsValue {
-  font-family: $font-ui;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: $text;
 }
 
 .statsChange {
-  font-family: $font-mono;
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 500;
   color: $success;
 
   &.negative {
@@ -265,10 +277,15 @@ $font-mono: 'JetBrains Mono', monospace;
   }
 }
 
+// =============================================================================
+// FEATURE CARD
+// =============================================================================
+
 .cardFeature {
-  padding: 28px 24px;
+  padding: 24px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: $bg;
   text-align: center;
 }
 
@@ -278,23 +295,32 @@ $font-mono: 'JetBrains Mono', monospace;
   margin-bottom: 12px;
 }
 
+// =============================================================================
+// ELEVATED CARDS
+// =============================================================================
+
 .cardElevated {
   padding: 24px;
   border: 1px solid $border;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  background: $bg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .cardElevatedHover {
   @extend .cardElevated;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
   }
 }
+
+// =============================================================================
+// BUTTONS
+// =============================================================================
 
 %btn-base {
   display: inline-flex;
@@ -304,33 +330,33 @@ $font-mono: 'JetBrains Mono', monospace;
   padding: 8px 16px;
   font-size: 0.8125rem;
   font-weight: 500;
-  font-family: $font-ui;
-  border-radius: 0;
+  font-family: inherit;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border: 1px solid transparent;
 }
 
 .btnPrimary {
   @extend %btn-base;
-  background: $ink;
-  color: $cream;
-  border-color: $ink;
+  background: $text;
+  color: $bg;
+  border-color: $text;
 
   &:hover {
-    background: $ink-soft;
-    border-color: $ink-soft;
+    background: $text-secondary;
+    border-color: $text-secondary;
   }
 }
 
 .btnSecondary {
   @extend %btn-base;
-  background: transparent;
+  background: $bg;
   color: $text;
   border-color: $border;
 
   &:hover {
-    background: $surface;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: $bg-hover;
+    border-color: $text-muted;
   }
 }
