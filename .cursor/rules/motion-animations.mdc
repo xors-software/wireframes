@@ -1,0 +1,60 @@
+---
+description: Motion (formerly Framer Motion) animation patterns for scroll reveals, parallax, and transitions
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Motion Animation Patterns
+
+## Import
+
+ALWAYS import from `"motion/react"`, NEVER from `"framer-motion"`:
+
+```tsx
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "motion/react"
+```
+
+Mark animated components with `"use client"`.
+
+## Scroll Reveals (whileInView)
+
+```tsx
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+>
+```
+
+For staggered lists, increment `delay`:
+
+```tsx
+{items.map((item, i) => (
+  <motion.div
+    key={item.id}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: i * 0.08 }}
+  />
+))}
+```
+
+## Scroll-Linked Parallax
+
+```tsx
+const ref = useRef(null)
+const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+const y = useTransform(scrollYProgress, [0, 1], [50, -50])
+
+<motion.div ref={ref} style={{ y }} />
+```
+
+## Performance Rules
+
+- Only animate `opacity`, `transform`, `filter`, `clipPath` (GPU-composited)
+- Use `will-change: transform` sparingly and only during active animation
+- Prefer `viewport={{ once: true }}` to avoid re-triggering
+- Keep durations 0.4-0.8s for reveals, 0.15-0.25s for hovers
+- Use spring physics for natural feel: `{ type: "spring", stiffness: 100, damping: 20 }`

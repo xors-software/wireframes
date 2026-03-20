@@ -1,0 +1,45 @@
+---
+description: XORS brand identity, design tokens, and visual language for all pages
+alwaysApply: true
+---
+
+# XORS Brand System
+
+## Logo Assets
+
+SVG logos in `public/brand/logo/`. Use `xors-logo-full.svg` for headers, `xors-logo-symbol.svg` for favicons/marks. Stroke variants have `-stroke` suffix.
+
+## Color Palette
+
+```scss
+$charcoal: #4A4A4A;      // dark backgrounds
+$gold: #F5B800;           // primary accent
+$cyan: #00E8A0;           // secondary accent (use sparingly)
+$red: #FF0000;            // tertiary accent (use sparingly)
+$black: #0A0A0A;          // text on light, symbol on light
+$white: #FAFAFA;          // text on dark, light backgrounds
+$surface: #F5F5F5;        // subtle surface distinction
+$border-light: #E5E5E5;   // borders on light
+$border-dark: #333333;    // borders on dark
+$text-secondary: #525252; // muted text on light
+$text-muted: #A3A3A3;     // very muted text
+```
+
+## Typography
+
+- Body: Inter (400, 500, 600)
+- Mono: JetBrains Mono (code/data)
+- Headings: normal weight, `letter-spacing: -0.02em`
+- Labels: small, uppercase, `letter-spacing: 0.05em`
+- Body line-height: 1.6
+
+## Visual Rules
+
+- Zero border-radius throughout
+- Sections separated by `border-top: 1px solid` lines
+- Generous vertical rhythm (64-96px between sections)
+- Max content: 800px for reading, 1200px for layouts
+- Buttons: outlined, uppercase, wide tracking, hover inverts fg/bg
+- CTAs end with arrows: `→`
+- Headlines: lowercase, conversational, confident
+- Body: muted color with key terms in foreground color
