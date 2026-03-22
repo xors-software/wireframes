@@ -99,6 +99,12 @@ const games: Item[] = [
     description: 'Prediction markets. Bet on outcomes with XORS credits.',
     href: '/games/polymarket',
   },
+  {
+    id: 3,
+    label: 'sphere brawl',
+    description: 'Medieval arena combat. Reaper vs Blacksmith in epic sphere battle.',
+    href: '/games/sphere-brawl',
+  },
 ]
 
 function formatNumber(n: number): string {
