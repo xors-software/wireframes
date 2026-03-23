@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.scss'
+import { SmoothScroll } from '@/components/smooth-scroll'
+import { Cursor } from '@/components/cursor'
+import { Grain } from '@/components/grain'
 
 export const metadata: Metadata = {
   title: 'XORS Wireframes',
@@ -18,7 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SmoothScroll />
+        <Cursor />
+        <Grain />
+        {children}
+      </body>
     </html>
   )
 }
