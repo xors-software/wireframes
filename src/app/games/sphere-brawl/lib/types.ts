@@ -16,7 +16,7 @@ export interface UnitClassDef {
   radius: number
   color: string
   accentColor: string
-  weaponType: 'sword' | 'bow' | 'staff' | 'shield' | 'lance'
+  weaponType: 'sword' | 'bow' | 'axe' | 'staff' | 'shield' | 'lance'
   weaponLength: number
   ability: {
     type: 'none' | 'projectile' | 'area_blast' | 'heal_aura'
