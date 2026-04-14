@@ -17,6 +17,8 @@ export const KICK_FORCE = 0.8
 // Weapon damage (only weapons deal damage, not body collisions)
 export const WEAPON_HIT_COOLDOWN_MS = 600
 
+export const CLASH_COOLDOWN_MS = 150
+
 // Superpower — charges per hit, activates when full
 export const SUPER_CHARGE_MAX = 100
 export const SUPER_CHARGE_PER_HIT = 25

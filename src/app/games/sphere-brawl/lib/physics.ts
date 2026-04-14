@@ -144,6 +144,23 @@ function weaponSegment(s: Sphere): [number, number, number, number] {
   ]
 }
 
+// --- Analytical segment-segment intersection (exact, no sampling) ---
+
+function segmentIntersection(
+  ax1: number, ay1: number, ax2: number, ay2: number,
+  bx1: number, by1: number, bx2: number, by2: number,
+): { x: number; y: number } | null {
+  const d1x = ax2 - ax1, d1y = ay2 - ay1
+  const d2x = bx2 - bx1, d2y = by2 - by1
+  const cross = d1x * d2y - d1y * d2x
+  if (Math.abs(cross) < 1e-10) return null // parallel
+  const dx = bx1 - ax1, dy = by1 - ay1
+  const t = (dx * d2y - dy * d2x) / cross
+  const u = (dx * d1y - dy * d1x) / cross
+  if (t < 0 || t > 1 || u < 0 || u > 1) return null
+  return { x: ax1 + t * d1x, y: ay1 + t * d1y }
+}
+
 function segmentCircleHit(
   x1: number, y1: number, x2: number, y2: number,
   cx: number, cy: number, cr: number,
@@ -166,8 +183,18 @@ export function checkWeaponHit(attacker: Sphere, target: Sphere): boolean {
   if (attacker.team === target.team) return false
   if (attacker.weaponHitCooldown > 0) return false
 
-  const [x1, y1, x2, y2] = weaponSegment(attacker)
-  return segmentCircleHit(x1, y1, x2, y2, target.position.x, target.position.y, target.radius)
+  const aSeg = weaponSegment(attacker)
+  if (!segmentCircleHit(...aSeg, target.position.x, target.position.y, target.radius)) {
+    return false
+  }
+
+  // Weapon blocking: if defender's weapon crosses attacker's weapon, the hit is parried
+  const bSeg = weaponSegment(target)
+  if (segmentIntersection(...aSeg, ...bSeg)) {
+    return false
+  }
+
+  return true
 }
 
 // --- Weapon-weapon clash: minimum distance between segments ---
@@ -213,11 +240,17 @@ function segmentSegmentDist(
 const CLASH_THRESHOLD = 6
 
 export function checkWeaponClash(a: Sphere, b: Sphere): { x: number; y: number } | null {
-  if (a.weaponHitCooldown > 0 || b.weaponHitCooldown > 0) return null
+  if (a.team === b.team) return null
+  if (a.clashCooldown > 0 || b.clashCooldown > 0) return null
 
   const [ax1, ay1, ax2, ay2] = weaponSegment(a)
   const [bx1, by1, bx2, by2] = weaponSegment(b)
 
+  // Analytical intersection — catches crossing weapons exactly
+  const hit = segmentIntersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2)
+  if (hit) return hit
+
+  // Proximity fallback — catches near-misses for visual weapon width
   const [d, cx, cy] = segmentSegmentDist(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2)
   if (d < CLASH_THRESHOLD) {
     return { x: cx, y: cy }

@@ -52,6 +52,7 @@ export interface Sphere {
   abilityCooldown: number
   kickTimer: number
   weaponHitCooldown: number
+  clashCooldown: number
   superCharge: number
   superActive: boolean
   superTimer: number

@@ -31,8 +31,18 @@ body {
   cursor: none;
 }
 
-a, button {
-  cursor: none;
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
 }
 
 a {

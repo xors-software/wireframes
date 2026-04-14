@@ -50,6 +50,7 @@ function spawnSphere(classId: string, team: Team, x: number, y: number): Sphere 
     abilityCooldown: cls.ability.cooldownMs * (0.3 + Math.random() * 0.7),
     kickTimer: 1000 + Math.random() * 2000,
     weaponHitCooldown: 0,
+    clashCooldown: 0,
     superCharge: 0,
     superActive: false,
     superTimer: 0,
@@ -132,8 +133,9 @@ export function BattleArena({ config, onVictory }: Props) {
         applyPhysics(s, ts)
         particles.push(...wallBounce(s))
 
-        // Weapon hit cooldown
+        // Weapon cooldowns
         if (s.weaponHitCooldown > 0) s.weaponHitCooldown -= dt
+        if (s.clashCooldown > 0) s.clashCooldown -= dt
 
         // Superpower activation & duration
         if (!s.superActive && s.superCharge >= C.SUPER_CHARGE_MAX) {
@@ -259,29 +261,36 @@ export function BattleArena({ config, onVictory }: Props) {
         }
       }
 
-      // Weapon-weapon clashes — line intersection, both reverse spin
+      // Weapon-weapon clashes — analytical intersection + proximity
       for (let i = 0; i < alive.length; i++) {
         for (let j = i + 1; j < alive.length; j++) {
           const clash = checkWeaponClash(alive[i], alive[j])
           if (clash) {
+            // Always reverse spin to prevent phasing
             alive[i].weaponSwingSpeed = -alive[i].weaponSwingSpeed
             alive[j].weaponSwingSpeed = -alive[j].weaponSwingSpeed
-            alive[i].weaponHitCooldown = 200
-            alive[j].weaponHitCooldown = 200
-            applyClashKnockback(alive[i], alive[j])
-            for (let k = 0; k < 8; k++) {
-              const a = Math.random() * Math.PI * 2
-              const sp = 1 + Math.random() * 3
-              particles.push({
-                x: clash.x, y: clash.y,
-                vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-                radius: 1 + Math.random() * 1.5, color: '#FFF',
-                alpha: 1, life: 0, maxLife: 120 + Math.random() * 80,
-              })
+            alive[i].clashCooldown = C.CLASH_COOLDOWN_MS
+            alive[j].clashCooldown = C.CLASH_COOLDOWN_MS
+
+            // Full effects (knockback, particles, shake) only when not on hit cooldown
+            if (alive[i].weaponHitCooldown <= 0 && alive[j].weaponHitCooldown <= 0) {
+              alive[i].weaponHitCooldown = 200
+              alive[j].weaponHitCooldown = 200
+              applyClashKnockback(alive[i], alive[j])
+              for (let k = 0; k < 8; k++) {
+                const a = Math.random() * Math.PI * 2
+                const sp = 1 + Math.random() * 3
+                particles.push({
+                  x: clash.x, y: clash.y,
+                  vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+                  radius: 1 + Math.random() * 1.5, color: '#FFF',
+                  alpha: 1, life: 0, maxLife: 120 + Math.random() * 80,
+                })
+              }
+              shakeX += (Math.random() - 0.5) * 2
+              shakeY += (Math.random() - 0.5) * 2
+              hitSlow = 50
             }
-            shakeX += (Math.random() - 0.5) * 2
-            shakeY += (Math.random() - 0.5) * 2
-            hitSlow = 50
           }
         }
       }
