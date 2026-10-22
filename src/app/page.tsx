@@ -23,36 +23,22 @@ const products: Item[] = [
   },
   {
     id: 1,
-    label: 'dealseeker',
-    description: 'AI-powered government RFP discovery and qualification.',
-    href: 'https://dealseeker.xors.xyz',
-    status: 'BETA'
-  },
-  {
-    id: 2,
-    label: 'nameit',
-    description: 'Describe your product, get memorable names and cheap domains.',
-    href: 'https://nameit.up.railway.app',
-    status: 'ONLINE'
-  },
-  {
-    id: 3,
     label: 'slopless.work',
     description: 'Make vibe-coded apps production quality.',
     href: 'https://slopless.work',
     status: 'ONLINE'
   },
   {
-    id: 4,
+    id: 2,
     label: 'www-starter',
     description: 'Production-ready Next.js starter with auth, payments, and deployment.',
     href: 'https://github.com/xors-software/www-starter',
     status: 'V1.0'
   },
   {
-    id: 5,
+    id: 3,
     label: 'me.xors.xyz',
-    description: 'Personal link hub. One link for everything.',
+    description: 'Auth + API for your applications.',
     href: 'https://me.xors.xyz',
     status: 'ONLINE'
   },
